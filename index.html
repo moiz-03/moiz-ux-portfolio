@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0B0F17" />
+
+  <title>MOIZ.UX — Websites That Give Your Brand a Stronger Online Presence</title>
+  <meta name="description"
+    content="I build modern landing pages and functional websites that help brands showcase what they do, connect with customers, and grow their online presence." />
+
+  <!-- Robots Directive -->
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <!-- OpenGraph (Vercel Production URL & Absolute Image) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MOIZ.UX — Web Development Portfolio" />
+  <meta property="og:description" content="Modern landing pages and functional websites for brands and businesses." />
+  <meta property="og:url" content="https://moiz-ux.vercel.app" />
+  <meta property="og:image" content="https://moiz-ux.vercel.app/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="MOIZ.UX — Websites That Give Your Brand a Stronger Online Presence" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MOIZ.UX — Web Development Portfolio" />
+  <meta name="twitter:description" content="Modern landing pages and functional websites for brands and businesses." />
+  <meta name="twitter:image" content="https://moiz-ux.vercel.app/og-image.png" />
+  <meta name="twitter:image:alt" content="MOIZ.UX — Websites That Give Your Brand a Stronger Online Presence" />
+
+  <!-- Inline SVG Favicon (Zero Network Requests) -->
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230B0F17%22/><text x=%2250%22 y=%2268%22 font-size=%2250%22 font-family=%22system-ui,sans-serif%22 font-weight=%22bold%22 fill=%22%2300F0FF%22 text-anchor=%22middle%22>M</text></svg>" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://moiz-ux.vercel.app" />
+
+  <!-- JSON-LD Structured Data for SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://moiz-ux.vercel.app/#website",
+          "url": "https://moiz-ux.vercel.app",
+          "name": "MOIZ.UX",
+          "description": "Modern landing pages and functional websites for brands and businesses.",
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://moiz-ux.vercel.app/#person",
+          "name": "Moiz",
+          "jobTitle": "Web Developer",
+          "url": "https://moiz-ux.vercel.app",
+          "image": "https://moiz-ux.vercel.app/og-image.png",
+          "sameAs": [
+            "https://instagram.com/moiz.ux"
+          ],
+          "knowsAbout": [
+            "Web Development",
+            "Landing Pages",
+            "React",
+            "Tailwind CSS",
+            "JavaScript"
+          ]
+        }
+      ]
+    }
+  </script>
+      <style>
+    .loading-shell {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #0B0F17; color: #F8FAFC; font-family: system-ui, -apple-system, sans-serif;
+    }
+    .loading-content { text-align: center; }
+    .loading-title { font-size: 2rem; font-weight: bold; margin-bottom: 1rem; color: #F8FAFC; }
+    .loading-accent { color: #00F0FF; }
+    .loading-text { color: #94A3B8; font-size: 0.875rem; }
+  </style>
+  <meta name="google-site-verification" content="pENKYOa_jytdrC_u3dU7Phna7S43bLhAfkSj7UbU47E" />
+</head>
+
+<body class="bg-slate-950 text-slate-50 antialiased">
+  
+  <div id="root">
+    <main id="main" class="loading-shell">
+      <div class="loading-content">
+        <h1 class="loading-title">
+          MOIZ<span class="loading-accent">.UX</span>
+        </h1>
+        <p class="loading-text">Loading...</p>
+      </div>
+    </main>
+  </div>
+
+  <script type="module" src="/src/main.jsx"></script>
+  
+  <!-- Load GTM AFTER the page is interactive -->
+  <script>
+    window.addEventListener('load', function() {
+      const loadGTM = () => {
+        var script = document.createElement('script');
+        script.innerHTML = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KQXT4T5H');`;
+        document.body.appendChild(script);
+      };
+      
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadGTM, { timeout: 3000 });
+      } else {
+        setTimeout(loadGTM, 2000);
+      }
+    });
+  </script>
+</body>
+</html>

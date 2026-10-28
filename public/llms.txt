@@ -1,0 +1,33 @@
+# MOIZ.UX
+
+> Websites That Give Your Brand a Stronger Online Presence.
+
+MOIZ.UX is the personal web development portfolio and service business of Moiz. He builds modern landing pages, business websites, and functional web applications for small businesses, startups, creators, and independent brands.
+
+## Core Message
+Your brand deserves more than a social media profile. Give it a home on the web.
+
+## Services
+- [Landing Pages](https://moiz-ux.vercel.app/#services): Focused single-page experiences for brands, products, and campaigns. Includes hero sections, features, FAQs, and responsive layouts.
+- [Business & Portfolio Websites](https://moiz-ux.vercel.app/#services): Multi-page brand homes for businesses and creators. Includes about pages, service pages, project showcases, and contact forms.
+- [Functional Websites](https://moiz-ux.vercel.app/#services): Beyond static content. Includes contact forms, database-backed content, dynamic listings, and third-party integrations.
+
+## Development Process
+1. [Discovery](https://moiz-ux.vercel.app/#process): Understand the business, audience, and requirements.
+2. [Planning](https://moiz-ux.vercel.app/#process): Agree on scope, content, timeline, and budget.
+3. [Development](https://moiz-ux.vercel.app/#process): Build the agreed website and functionality.
+4. [Review](https://moiz-ux.vercel.app/#process): Test the website and collect feedback.
+5. [Launch](https://moiz-ux.vercel.app/#process): Deploy the approved website and hand over.
+
+## Contact & Socials
+- [Website](https://moiz-ux.vercel.app)
+- [Email Moiz](mailto:code.moiz2003@gmail.com)
+- [Instagram Profile](https://instagram.com/moiz.ux)
+
+## Key Pages
+- [Home](https://moiz-ux.vercel.app/#home): Hero and value proposition.
+- [Projects](https://moiz-ux.vercel.app/#projects): Selected concept and client projects with live demos.
+- [Services](https://moiz-ux.vercel.app/#services): Detailed service offerings.
+- [Process](https://moiz-ux.vercel.app/#process): The 5-step development roadmap.
+- [About](https://moiz-ux.vercel.app/#about): Background and tools used.
+- [Contact](https://moiz-ux.vercel.app/#contact): Enquiry form and direct contact links.
