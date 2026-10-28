@@ -4,7 +4,10 @@ import { siteConfig } from "../../data/siteConfig.js";
 
 export function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden border-b border-slate-800/60 min-h-162.5 lg:min-h-187.5">
+    <section
+      id="home"
+      className="relative overflow-hidden border-b border-slate-800/60 min-h-162.5 lg:min-h-187.5"
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,240,255,0.08),transparent_60%)]"
@@ -27,14 +30,17 @@ export function Hero() {
             {siteConfig.description}
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button as="a" href="#contact" size="lg">
               Let&apos;s Build Your Website
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Button>
-            <Button as="a" href="#projects" size="lg" variant="secondary">
-              Explore My Work
-            </Button>
+            <a
+              href="#projects"
+              className="text-sm font-medium text-slate-400 transition-colors hover:text-cyan-400"
+            >
+              or explore my work →
+            </a>
           </div>
         </div>
 
@@ -43,7 +49,10 @@ export function Hero() {
             aria-hidden="true"
             className="absolute -inset-4 rounded-3xl bg-linear-to-* from-cyan-500/10 via-transparent to-blue-600/10 blur-2xl"
           />
-          <div aria-hidden="true" className="relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/80 shadow-2xl">
+          <div
+            aria-hidden="true"
+            className="relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/80 shadow-2xl"
+          >
             <div className="flex items-center gap-2 border-b border-slate-800 bg-slate-900 px-4 py-2.5">
               <span
                 className="h-2.5 w-2.5 rounded-full bg-red-500/60"
