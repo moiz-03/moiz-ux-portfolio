@@ -1,5 +1,9 @@
-import { Instagram, Mail, MessageCircle } from 'lucide-react';
-import { siteConfig, buildWhatsAppUrl, buildMailtoUrl } from '../../data/siteConfig.js';
+import { Instagram, Mail, MessageCircle } from "lucide-react";
+import {
+  siteConfig,
+  buildWhatsAppUrl,
+  buildMailtoUrl,
+} from "../../data/siteConfig.js";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -12,7 +16,8 @@ export function Footer() {
               MOIZ<span className="text-cyan-400">.UX</span>
             </p>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-slate-300">
-              Modern landing pages and functional websites for brands and businesses.
+              Modern landing pages and functional websites for brands and
+              businesses.
             </p>
           </div>
 
@@ -74,6 +79,24 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col gap-3 border-t border-slate-800 pt-6 text-xs text-slate-300 sm:flex-row sm:items-center sm:justify-between">
           <p>© {year} MOIZ.UX. All rights reserved.</p>
+          <ul className="flex flex-wrap items-center gap-4">
+            <li>
+              <a
+                href="/privacy.html"
+                className="transition-colors hover:text-cyan-400"
+              >
+                Privacy
+              </a>
+            </li>
+            <li>
+              <a
+                href="/terms.html"
+                className="transition-colors hover:text-cyan-400"
+              >
+                Terms
+              </a>
+            </li>
+          </ul>
           <p>Built by Moiz. Hosted on the edge.</p>
         </div>
       </div>
