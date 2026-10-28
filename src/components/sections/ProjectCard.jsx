@@ -1,38 +1,44 @@
-import PropTypes from 'prop-types';
-import { ArrowUpRight } from 'lucide-react';
-import { Badge } from '../common/Badge.jsx';
+import PropTypes from "prop-types";
+import { ArrowUpRight } from "lucide-react";
+import { Badge } from "../common/Badge.jsx";
 
 export function ProjectCard({ project }) {
-  const { title, shortDescription, category, technologies, liveUrl, projectType, accent } = project;
+  const {
+    title,
+    shortDescription,
+    category,
+    technologies,
+    liveUrl,
+    projectType,
+    accent,
+  } = project;
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-900/70 transition-colors hover:border-cyan-400/40">
-      {/* Thumbnail placeholder — replace with real WebP screenshots */}
-      <div aria-hidden="true" className="relative aspect-4/3 overflow-hidden border-b border-slate-800 bg-slate-950">
-  <div className={`absolute inset-0 bg-linear-to-br ${accent ?? 'from-cyan-500/20 to-blue-600/20'}`} />
-        <div className="relative flex h-full flex-col justify-between p-4">
-          <div className="flex justify-between">
-            <div className="h-1.5 w-10 rounded bg-slate-50/60" />
-            <div className="flex gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-slate-50/40" />
-              <span className="h-1.5 w-1.5 rounded-full bg-slate-50/40" />
-            </div>
-          </div>
-          <div className="space-y-2">
-            <div className="h-3 w-3/4 rounded bg-slate-50/70" />
-            <div className="h-1.5 w-1/2 rounded bg-slate-50/30" />
-          </div>
-          <div className="flex gap-2">
-            <div className="h-5 w-16 rounded bg-slate-50/20" />
-            <div className="h-5 w-10 rounded bg-slate-50/10" />
-          </div>
-        </div>
+      {/* Project Image */}
+      <div className="relative aspect-4/3 overflow-hidden border-b border-slate-800 bg-slate-950">
+        {project.imageUrl ? (
+          <img
+            src={project.imageUrl}
+            alt={`${title} screenshot`}
+            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+        ) : (
+          <div
+            className={`absolute inset-0 bg-linear-to-br ${accent ?? "from-cyan-500/20 to-blue-600/20"}`}
+          />
+        )}
       </div>
 
       <div className="flex flex-1 flex-col p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-cyan-400">{category}</p>
-            <h3 className="mt-1 text-lg font-semibold text-slate-50">{title}</h3>
+            <p className="text-xs font-medium uppercase tracking-wide text-cyan-400">
+              {category}
+            </p>
+            <h3 className="mt-1 text-lg font-semibold text-slate-50">
+              {title}
+            </h3>
           </div>
           {liveUrl && (
             <a
@@ -48,13 +54,17 @@ export function ProjectCard({ project }) {
           )}
         </div>
 
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-400">{shortDescription}</p>
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
+          {shortDescription}
+        </p>
 
         <div className="mt-4 flex flex-wrap items-center gap-2">
           {technologies.map((tag) => (
             <Badge key={tag}>{tag}</Badge>
           ))}
-          {projectType === 'concept' && <Badge variant="concept">Concept</Badge>}
+          {projectType === "concept" && (
+            <Badge variant="concept">Concept</Badge>
+          )}
         </div>
 
         {liveUrl && (
@@ -82,7 +92,8 @@ ProjectCard.propTypes = {
     category: PropTypes.string.isRequired,
     technologies: PropTypes.arrayOf(PropTypes.string).isRequired,
     liveUrl: PropTypes.string,
-    projectType: PropTypes.oneOf(['client', 'concept']).isRequired,
+    imageUrl: PropTypes.string,
+    projectType: PropTypes.oneOf(["client", "concept"]).isRequired,
     accent: PropTypes.string,
   }).isRequired,
 };

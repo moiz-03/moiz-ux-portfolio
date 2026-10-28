@@ -67,42 +67,22 @@ export function Hero() {
                 aria-hidden="true"
               />
               <div className="ml-3 flex-1 truncate rounded-md bg-slate-800/70 px-3 py-1 text-[10px] text-slate-400">
-                aura-demo.moizux.dev
+                pixel-quest-aba36.web.app
               </div>
             </div>
             <div className="aspect-4/3 bg-linear-to-br from-slate-900 via-slate-950 to-blue-950/40 p-6">
-              <div className="mb-6 flex items-center justify-between">
-                <div className="h-2 w-16 rounded bg-cyan-400/70" />
-                <div className="flex gap-2">
-                  <div className="h-1.5 w-8 rounded bg-slate-700" />
-                  <div className="h-1.5 w-8 rounded bg-slate-700" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="h-4 w-3/4 rounded bg-slate-50/90" />
-                <div className="h-4 w-1/2 rounded bg-slate-50/90" />
-              </div>
-              <div className="mt-3 space-y-1.5">
-                <div className="h-1.5 w-2/3 rounded bg-slate-600" />
-                <div className="h-1.5 w-1/2 rounded bg-slate-600" />
-              </div>
-              <div className="mt-5 flex gap-2">
-                <div className="h-7 w-24 rounded-md bg-linear-to-r from-cyan-500 to-blue-600" />
-                <div className="h-7 w-20 rounded-md border border-slate-700" />
-              </div>
-              <div className="mt-8 grid grid-cols-3 gap-3">
-                {[0, 1, 2].map((i) => (
-                  <div
-                    key={i}
-                    className="aspect-square rounded-lg border border-slate-800 bg-slate-800/50"
-                  />
-                ))}
+              <div className="aspect-4/3 overflow-hidden bg-slate-950">
+                <img
+                  src="/pixel-quest.png"
+                  alt="Pixel Quest Dashboard Preview"
+                  className="h-full w-full object-cover object-top opacity-90"
+                />
               </div>
             </div>
           </div>
-          <p className="mt-3 text-right text-[11px] text-slate-400">
-            Preview: Aura Cosmetics — Concept Project
-          </p>
+          <div className="ml-3 flex-1 truncate rounded-md bg-slate-800/70 px-3 py-1 text-[10px] text-slate-400">
+            pixel-quest-aba36.web.app
+          </div>
         </div>
       </div>
     </section>
