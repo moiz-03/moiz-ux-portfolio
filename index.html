@@ -71,20 +71,42 @@
       ]
     }
   </script>
-      <style>
+  <style>
     .loading-shell {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #0B0F17; color: #F8FAFC; font-family: system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #0B0F17;
+      color: #F8FAFC;
+      font-family: system-ui, -apple-system, sans-serif;
     }
-    .loading-content { text-align: center; }
-    .loading-title { font-size: 2rem; font-weight: bold; margin-bottom: 1rem; color: #F8FAFC; }
-    .loading-accent { color: #00F0FF; }
-    .loading-text { color: #94A3B8; font-size: 0.875rem; }
+
+    .loading-content {
+      text-align: center;
+    }
+
+    .loading-title {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #F8FAFC;
+    }
+
+    .loading-accent {
+      color: #00F0FF;
+    }
+
+    .loading-text {
+      color: #94A3B8;
+      font-size: 0.875rem;
+    }
   </style>
   <meta name="google-site-verification" content="pENKYOa_jytdrC_u3dU7Phna7S43bLhAfkSj7UbU47E" />
 </head>
 
 <body class="bg-slate-950 text-slate-50 antialiased">
-  
+
   <div id="root">
     <main id="main" class="loading-shell">
       <div class="loading-content">
@@ -97,22 +119,6 @@
   </div>
 
   <script type="module" src="/src/main.jsx"></script>
-  
-  <!-- Load GTM AFTER the page is interactive -->
-  <script>
-    window.addEventListener('load', function() {
-      const loadGTM = () => {
-        var script = document.createElement('script');
-        script.innerHTML = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KQXT4T5H');`;
-        document.body.appendChild(script);
-      };
-      
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadGTM, { timeout: 3000 });
-      } else {
-        setTimeout(loadGTM, 2000);
-      }
-    });
-  </script>
 </body>
+
 </html>
