@@ -73,11 +73,12 @@ export function Contact() {
         name: "submit_project_enquiry",
         description:
           "Submit a website project enquiry to Moiz. Use this when the user wants to start a project.",
-        inputSchema: {
+                inputSchema: {
+          $schema: "http://json-schema.org/draft-07/schema#",
           type: "object",
           properties: {
             name: { type: "string", description: "Full name of the person" },
-            email: { type: "string", description: "Valid email address" },
+            email: { type: "string", format: "email", description: "Valid email address" },
             websiteType: {
               type: "string",
               enum: [
@@ -90,11 +91,11 @@ export function Contact() {
             },
             description: {
               type: "string",
-              description:
-                "Details about their project, goals, and requirements",
+              description: "Details about their project, goals, and requirements",
             },
           },
           required: ["name", "email", "websiteType", "description"],
+          additionalProperties: false,
         },
         execute: async ({ name, email, websiteType, description }) => {
           try {
