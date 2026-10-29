@@ -16,11 +16,14 @@ export function ProjectCard({ project }) {
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-900/70 transition-colors hover:border-cyan-400/40">
       {/* Project Image */}
       <div className="relative aspect-4/3 overflow-hidden border-b border-slate-800 bg-slate-950">
-        {project.imageUrl ? (
+                {project.imageUrl ? (
           <img
             src={project.imageUrl}
+            width="711"
+            height="373"
             alt={`${title} screenshot`}
-            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-auto max-h-full object-contain rounded-md shadow-2xl transition-transform duration-500 group-hover:scale-105"
+            style={{ aspectRatio: "711 / 373" }}
             loading="lazy"
           />
         ) : (

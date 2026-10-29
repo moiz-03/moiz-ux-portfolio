@@ -66,12 +66,16 @@ export function Hero() {
               </div>
             </div>
             
-            {/* The Image Container */}
+                        {/* The Image Container */}
             <div className="aspect-4/3 bg-slate-900 p-6 flex items-center justify-center overflow-hidden">
               <img 
                 src="/pixel-quest.webp" 
+                width="711" 
+                height="373" 
                 alt="Pixel Quest Dashboard Preview" 
-                className="max-h-full max-w-full object-contain rounded-md shadow-2xl border border-slate-700/50"
+                fetchPriority="high"
+                className="w-full h-auto max-h-full object-contain rounded-md shadow-2xl border border-slate-700/50"
+                style={{ aspectRatio: "711 / 373" }}
               />
             </div>
           </div>

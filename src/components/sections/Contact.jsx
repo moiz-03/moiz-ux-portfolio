@@ -340,6 +340,7 @@ export function Contact() {
                   <div className="mt-2 flex gap-4">
                                         {["email", "whatsapp"].map((opt) => (
                       <div key={opt} className="flex items-center gap-2">
+                        {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
                         <input
                           type="radio"
                           id={`contact-${opt}`}
@@ -348,7 +349,8 @@ export function Contact() {
                           checked={values.preferredContact === opt}
                           onChange={handleChange}
                           className="h-4 w-4 accent-cyan-400"
-                          title={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
+                          title={`Contact Preference: ${opt === "email" ? "Email" : "WhatsApp"}`}
+                          aria-description={`Select this option to receive a response via ${opt}.`}
                         />
                         <label htmlFor={`contact-${opt}`} className="text-sm text-slate-300">
                           {opt === "email" ? "Email" : "WhatsApp"}
