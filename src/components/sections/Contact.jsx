@@ -64,65 +64,71 @@ function validate(values) {
     errors.description = "Please keep your description under 5,000 characters.";
   return errors;
 }
-
+let isWebMcpRegistered = false;
 export function Contact() {
-  // Register WebMCP Tool for AI Agents
+    // Register WebMCP Tool for AI Agents
   useEffect(() => {
-    if (typeof document !== "undefined" && document.modelContext) {
-      document.modelContext.registerTool({
-        name: "submit_project_enquiry",
-        description:
-          "Submit a website project enquiry to Moiz. Use this when the user wants to start a project.",
-                inputSchema: {
-          $schema: "http://json-schema.org/draft-07/schema#",
-          type: "object",
-          properties: {
-            name: { type: "string", description: "Full name of the person" },
-            email: { type: "string", format: "email", description: "Valid email address" },
-            websiteType: {
-              type: "string",
-              enum: [
-                "Landing Page Development",
-                "Business & Portfolio Website",
-                "Functional Website",
-                "Other",
-              ],
-              description: "The type of website they need",
+    if (typeof document !== "undefined" && document.modelContext && !isWebMcpRegistered) {
+      try {
+        document.modelContext.registerTool({
+          name: "submit_project_enquiry",
+          description:
+            "Submit a website project enquiry to Moiz. Use this when the user wants to start a project.",
+          inputSchema: {
+            $schema: "http://json-schema.org/draft-07/schema#",
+            type: "object",
+            properties: {
+              name: { type: "string", description: "Full name of the person" },
+              email: { type: "string", format: "email", description: "Valid email address" },
+              websiteType: {
+                type: "string",
+                enum: [
+                  "Landing Page Development",
+                  "Business & Portfolio Website",
+                  "Functional Website",
+                  "Other",
+                ],
+                description: "The type of website they need",
+              },
+              description: {
+                type: "string",
+                description:
+                  "Details about their project, goals, and requirements",
+              },
             },
-            description: {
-              type: "string",
-              description: "Details about their project, goals, and requirements",
-            },
+            required: ["name", "email", "websiteType", "description"],
+            additionalProperties: false,
           },
-          required: ["name", "email", "websiteType", "description"],
-          additionalProperties: false,
-        },
-        execute: async ({ name, email, websiteType, description }) => {
-          try {
-            const payload = {
-              name,
-              email,
-              website_type: websiteType,
-              description,
-              preferred_contact: "email",
-              website_hp_field: "", // Honeypot bypass for AI
-              submittedAt: new Date().toISOString(),
-            };
+          execute: async ({ name, email, websiteType, description }) => {
+            try {
+              const payload = {
+                name,
+                email,
+                website_type: websiteType,
+                description,
+                preferred_contact: "email",
+                website_hp_field: "", // Honeypot bypass for AI
+                submittedAt: new Date().toISOString(),
+              };
 
-            const res = await fetch("/api/contact", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
-            });
+              const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
 
-            if (!res.ok) throw new Error("Server rejected submission");
+              if (!res.ok) throw new Error("Server rejected submission");
 
-            return "Success: Enquiry submitted. Moiz will reply within 24 hours.";
-          } catch (error) {
-            return `Error: Failed to submit enquiry. ${error.message}`;
-          }
-        },
-      });
+              return "Success: Enquiry submitted. Moiz will reply within 24 hours.";
+            } catch (error) {
+              return `Error: Failed to submit enquiry. ${error.message}`;
+            }
+          },
+        });
+        isWebMcpRegistered = true; // Mark as registered
+      } catch (err) {
+        console.warn("WebMCP registration skipped:", err);
+      }
     }
   }, []);
   const {
