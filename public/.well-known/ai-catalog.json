@@ -6,18 +6,27 @@
   },
   "entries": [
     {
-      "identifier": "urn:ai:moiz-ux.vercel.app:knowledge:llms-txt",
+      "identifier": "urn:air:moiz-ux.vercel.app:knowledge:llms-txt",
       "displayName": "MOIZ.UX Knowledge Index",
-      "type": "text/plain",
+      "type": "text/markdown",
       "url": "https://moiz-ux.vercel.app/llms.txt",
-      "description": "Curated index of services, process, and portfolio projects for MOIZ.UX."
+      "description": "Curated index of services, process, and portfolio projects for MOIZ.UX.",
+      "representativeQueries": [
+        "What services does MOIZ.UX offer?",
+        "Who is Moiz and what does he build?",
+        "Show me the portfolio projects of MOIZ.UX"
+      ]
     },
     {
-      "identifier": "urn:ai:moiz-ux.vercel.app:tool:contact-form",
+      "identifier": "urn:air:moiz-ux.vercel.app:tool:contact-form",
       "displayName": "Project Enquiry Form",
-      "type": "application/webmcp-tool",
+      "type": "application/mcp-server-card+json",
       "url": "https://moiz-ux.vercel.app/#contact",
-      "description": "Submit a new website project enquiry. Requires name, email, website type, and project description."
+      "description": "Submit a new website project enquiry. Requires name, email, website type, and project description.",
+      "representativeQueries": [
+        "How do I hire Moiz for a website project?",
+        "Start a new project enquiry with MOIZ.UX"
+      ]
     }
   ]
 }
