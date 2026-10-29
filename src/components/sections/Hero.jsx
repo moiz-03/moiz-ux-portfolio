@@ -73,7 +73,7 @@ export function Hero() {
             <div className="aspect-4/3 bg-linear-to-br from-slate-900 via-slate-950 to-blue-950/40 p-6">
               <div className="aspect-4/3 overflow-hidden bg-slate-950">
                 <img
-                  src="/pixel-quest.png"
+                  src="/pixel-quest.webp"
                   alt="Pixel Quest Dashboard Preview"
                   className="h-full w-full object-cover object-top opacity-90"
                 />
