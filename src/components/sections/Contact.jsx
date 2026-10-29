@@ -1,58 +1,148 @@
-import { useState } from 'react';
-import { Mail, Instagram, MessageCircle, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
-import { SectionHeading } from '../common/SectionHeading.jsx';
-import { Card } from '../common/Card.jsx';
-import { Button } from '../common/Button.jsx';
-import { siteConfig, buildWhatsAppUrl, buildMailtoUrl } from '../../data/siteConfig.js';
-import { useFormValidation } from '../../hooks/useFormValidation.js';
-import { sanitizeInput } from '../../utils/sanitize.js';
+import { useState, useEffect } from "react";
+import {
+  Mail,
+  Instagram,
+  MessageCircle,
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+} from "lucide-react";
+import { SectionHeading } from "../common/SectionHeading.jsx";
+import { Card } from "../common/Card.jsx";
+import { Button } from "../common/Button.jsx";
+import {
+  siteConfig,
+  buildWhatsAppUrl,
+  buildMailtoUrl,
+} from "../../data/siteConfig.js";
+import { useFormValidation } from "../../hooks/useFormValidation.js";
+import { sanitizeInput } from "../../utils/sanitize.js";
 
 const initialValues = {
-  name: '',
-  businessName: '',
-  email: '',
-  preferredContact: 'email',
-  websiteType: '',
-  description: '',
-  budgetRange: '',
-  desiredTimeline: '',
-  website_hp_field: '', // honeypot
+  name: "",
+  businessName: "",
+  email: "",
+  preferredContact: "email",
+  websiteType: "",
+  description: "",
+  budgetRange: "",
+  desiredTimeline: "",
+  website_hp_field: "", // honeypot
 };
 
-const FIELD_ORDER = ['name', 'businessName', 'email', 'websiteType', 'description', 'budgetRange', 'desiredTimeline'];
+const FIELD_ORDER = [
+  "name",
+  "businessName",
+  "email",
+  "websiteType",
+  "description",
+  "budgetRange",
+  "desiredTimeline",
+];
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validate(values) {
   const errors = {};
-  if (!values.name.trim()) errors.name = 'Please enter your name.';
-  else if (values.name.trim().length > 100) errors.name = 'Please keep your name under 100 characters.';
+  if (!values.name.trim()) errors.name = "Please enter your name.";
+  else if (values.name.trim().length > 100)
+    errors.name = "Please keep your name under 100 characters.";
   if (values.businessName && values.businessName.trim().length > 100)
-    errors.businessName = 'Please keep your business name under 100 characters.';
-  if (!values.email.trim()) errors.email = 'Please enter your email.';
-  else if (values.email.trim().length > 254) errors.email = 'Please enter an email under 254 characters.';
-  else if (!EMAIL_RE.test(values.email)) errors.email = 'Please enter a valid email address.';
-  if (!values.websiteType) errors.websiteType = 'Please select a website type.';
-  if (!values.description.trim()) errors.description = 'Please describe your project.';
+    errors.businessName =
+      "Please keep your business name under 100 characters.";
+  if (!values.email.trim()) errors.email = "Please enter your email.";
+  else if (values.email.trim().length > 254)
+    errors.email = "Please enter an email under 254 characters.";
+  else if (!EMAIL_RE.test(values.email))
+    errors.email = "Please enter a valid email address.";
+  if (!values.websiteType) errors.websiteType = "Please select a website type.";
+  if (!values.description.trim())
+    errors.description = "Please describe your project.";
   else if (values.description.trim().length < 20)
-    errors.description = 'Please add at least 20 characters so I can understand the project.';
+    errors.description =
+      "Please add at least 20 characters so I can understand the project.";
   else if (values.description.trim().length > 5000)
-    errors.description = 'Please keep your description under 5,000 characters.';
+    errors.description = "Please keep your description under 5,000 characters.";
   return errors;
 }
 
 export function Contact() {
-  const { values, errors, touched, handleChange, handleBlur, validateAll, reset } =
-    useFormValidation(initialValues, validate);
-  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
-  const [serverError, setServerError] = useState('');
+  // Register WebMCP Tool for AI Agents
+  useEffect(() => {
+    if (typeof document !== "undefined" && document.modelContext) {
+      document.modelContext.registerTool({
+        name: "submit_project_enquiry",
+        description:
+          "Submit a website project enquiry to Moiz. Use this when the user wants to start a project.",
+        inputSchema: {
+          type: "object",
+          properties: {
+            name: { type: "string", description: "Full name of the person" },
+            email: { type: "string", description: "Valid email address" },
+            websiteType: {
+              type: "string",
+              enum: [
+                "Landing Page Development",
+                "Business & Portfolio Website",
+                "Functional Website",
+                "Other",
+              ],
+              description: "The type of website they need",
+            },
+            description: {
+              type: "string",
+              description:
+                "Details about their project, goals, and requirements",
+            },
+          },
+          required: ["name", "email", "websiteType", "description"],
+        },
+        execute: async ({ name, email, websiteType, description }) => {
+          try {
+            const payload = {
+              name,
+              email,
+              website_type: websiteType,
+              description,
+              preferred_contact: "email",
+              website_hp_field: "", // Honeypot bypass for AI
+              submittedAt: new Date().toISOString(),
+            };
+
+            const res = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) throw new Error("Server rejected submission");
+
+            return "Success: Enquiry submitted. Moiz will reply within 24 hours.";
+          } catch (error) {
+            return `Error: Failed to submit enquiry. ${error.message}`;
+          }
+        },
+      });
+    }
+  }, []);
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    validateAll,
+    reset,
+  } = useFormValidation(initialValues, validate);
+  const [status, setStatus] = useState("idle"); // idle | submitting | success | error
+  const [serverError, setServerError] = useState("");
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setServerError('');
+    setServerError("");
 
     // Honeypot check (belt-and-braces — server also checks)
     if (values.website_hp_field) {
-      setStatus('success');
+      setStatus("success");
       return;
     }
 
@@ -64,7 +154,7 @@ export function Contact() {
       return;
     }
 
-    setStatus('submitting');
+    setStatus("submitting");
     const payload = {
       name: sanitizeInput(values.name),
       business_name: sanitizeInput(values.businessName),
@@ -82,23 +172,26 @@ export function Contact() {
       // Dev fallback: no serverless function yet — simulate success so the flow can be tested.
       if (import.meta.env.DEV) {
         await new Promise((r) => setTimeout(r, 900));
-        console.info('[dev] simulated contact payload:', payload);
-        setStatus('success');
+        console.info("[dev] simulated contact payload:", payload);
+        setStatus("success");
         reset();
         return;
       }
 
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
       if (!res.ok) throw new Error(`Submission failed (${res.status})`);
-      setStatus('success');
+      setStatus("success");
       reset();
     } catch (err) {
-      setStatus('error');
-      setServerError(err.message || 'Something went wrong. Please try again or message via WhatsApp.');
+      setStatus("error");
+      setServerError(
+        err.message ||
+          "Something went wrong. Please try again or message via WhatsApp.",
+      );
     }
   };
 
@@ -129,13 +222,18 @@ export function Contact() {
                     WhatsApp — fastest
                     <span className="sr-only"> (opens in a new tab)</span>
                   </p>
-                  <p className="text-xs text-slate-300">Instant chat, usually replied within hours.</p>
+                  <p className="text-xs text-slate-300">
+                    Instant chat, usually replied within hours.
+                  </p>
                 </div>
               </a>
             </Card>
 
             <Card className="p-5">
-              <a href={buildMailtoUrl()} className="group flex items-center gap-3">
+              <a
+                href={buildMailtoUrl()}
+                className="group flex items-center gap-3"
+              >
                 <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-400">
                   <Mail className="h-5 w-5" aria-hidden="true" />
                 </span>
@@ -143,7 +241,9 @@ export function Contact() {
                   <p className="text-sm font-semibold text-slate-50 group-hover:text-cyan-400">
                     {siteConfig.email}
                   </p>
-                  <p className="text-xs text-slate-300">Send a detailed brief by email.</p>
+                  <p className="text-xs text-slate-300">
+                    Send a detailed brief by email.
+                  </p>
                 </div>
               </a>
             </Card>
@@ -163,7 +263,9 @@ export function Contact() {
                     {siteConfig.instagram.handle}
                     <span className="sr-only"> (opens in a new tab)</span>
                   </p>
-                  <p className="text-xs text-slate-300">Follow along or DM for a quick chat.</p>
+                  <p className="text-xs text-slate-300">
+                    Follow along or DM for a quick chat.
+                  </p>
                 </div>
               </a>
             </Card>
@@ -171,7 +273,13 @@ export function Contact() {
 
           {/* Form */}
           <Card className="lg:col-span-3">
-            <form onSubmit={onSubmit} noValidate className="space-y-5 p-6">
+            <form
+              onSubmit={onSubmit}
+              noValidate
+              className="space-y-5 p-6"
+              toolname="submit_project_enquiry"
+              tooldescription="Submit a website project enquiry to Moiz."
+            >
               <div className="grid gap-4 sm:grid-cols-2">
                 <Field
                   id="name"
@@ -213,8 +321,11 @@ export function Contact() {
                     Preferred Contact
                   </legend>
                   <div className="mt-2 flex gap-4">
-                    {['email', 'whatsapp'].map((opt) => (
-                      <label key={opt} className="flex items-center gap-2 text-sm text-slate-300">
+                    {["email", "whatsapp"].map((opt) => (
+                      <label
+                        key={opt}
+                        className="flex items-center gap-2 text-sm text-slate-300"
+                      >
                         <input
                           type="radio"
                           name="preferredContact"
@@ -223,7 +334,7 @@ export function Contact() {
                           onChange={handleChange}
                           className="h-4 w-4 accent-cyan-400"
                         />
-                        {opt === 'email' ? 'Email' : 'WhatsApp'}
+                        {opt === "email" ? "Email" : "WhatsApp"}
                       </label>
                     ))}
                   </div>
@@ -240,11 +351,14 @@ export function Contact() {
                 onBlur={handleBlur}
                 error={touched.websiteType && errors.websiteType}
                 options={[
-                  { value: '', label: 'Select a type…' },
-                  { value: 'Landing Page Development', label: 'Landing Page' },
-                  { value: 'Business & Portfolio Website', label: 'Business / Portfolio Website' },
-                  { value: 'Functional Website', label: 'Functional Website' },
-                  { value: 'Other', label: 'Other / Not sure yet' },
+                  { value: "", label: "Select a type…" },
+                  { value: "Landing Page Development", label: "Landing Page" },
+                  {
+                    value: "Business & Portfolio Website",
+                    label: "Business / Portfolio Website",
+                  },
+                  { value: "Functional Website", label: "Functional Website" },
+                  { value: "Other", label: "Other / Not sure yet" },
                 ]}
               />
 
@@ -271,11 +385,11 @@ export function Contact() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   options={[
-                    { value: '', label: 'Prefer not to say' },
-                    { value: 'Under $300', label: 'Under $300' },
-                    { value: '$300 - $500', label: '$300 – $500' },
-                    { value: '$500 - $1500', label: '$500 – $1,500' },
-                    { value: '$1,500+', label: '$1,500+' },
+                    { value: "", label: "Prefer not to say" },
+                    { value: "Under $300", label: "Under $300" },
+                    { value: "$300 - $500", label: "$300 – $500" },
+                    { value: "$500 - $1500", label: "$500 – $1,500" },
+                    { value: "$1,500+", label: "$1,500+" },
                   ]}
                 />
                 <Field
@@ -286,17 +400,27 @@ export function Contact() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   options={[
-                    { value: '', label: 'Select timeline…' },
-                    { value: 'ASAP', label: 'ASAP' },
-                    { value: '2 Weeks', label: '~2 weeks' },
-                    { value: '1 Month', label: '~1 month' },
-                    { value: 'Flexible', label: 'Flexible' },
+                    { value: "", label: "Select timeline…" },
+                    { value: "ASAP", label: "ASAP" },
+                    { value: "2 Weeks", label: "~2 weeks" },
+                    { value: "1 Month", label: "~1 month" },
+                    { value: "Flexible", label: "Flexible" },
                   ]}
                 />
               </div>
 
               {/* Honeypot — hidden off-screen, must remain empty */}
-              <div aria-hidden="true" style={{ position: 'absolute', left: '-9999px', top: 'auto', width: 1, height: 1, overflow: 'hidden' }}>
+              <div
+                aria-hidden="true"
+                style={{
+                  position: "absolute",
+                  left: "-9999px",
+                  top: "auto",
+                  width: 1,
+                  height: 1,
+                  overflow: "hidden",
+                }}
+              >
                 <label htmlFor="website_hp_field">Leave this empty</label>
                 <input
                   id="website_hp_field"
@@ -310,25 +434,42 @@ export function Contact() {
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
-                <Button type="submit" size="lg" disabled={status === 'submitting'}>
-                  {status === 'submitting' && <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />}
-                  {status === 'submitting' ? 'Sending…' : 'Send Enquiry'}
+                <Button
+                  type="submit"
+                  size="lg"
+                  disabled={status === "submitting"}
+                >
+                  {status === "submitting" && (
+                    <Loader2
+                      className="h-4 w-4 animate-spin"
+                      aria-hidden="true"
+                    />
+                  )}
+                  {status === "submitting" ? "Sending…" : "Send Enquiry"}
                 </Button>
-                <p className="text-xs text-slate-300">I reply within 24 hours.</p>
+                <p className="text-xs text-slate-300">
+                  I reply within 24 hours.
+                </p>
               </div>
 
               <div aria-live="polite" className="min-h-5">
-                {status === 'success' && (
+                {status === "success" && (
                   <p className="flex items-center gap-2 text-sm text-emerald-400">
                     <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
-                    Thanks! Your enquiry was sent. I&apos;ll get back to you within 24 hours.
+                    Thanks! Your enquiry was sent. I&apos;ll get back to you
+                    within 24 hours.
                   </p>
                 )}
-                {status === 'error' && (
+                {status === "error" && (
                   <div className="flex flex-wrap items-center gap-2 text-sm text-red-500">
                     <AlertCircle className="h-4 w-4" aria-hidden="true" />
-                    {serverError || 'Submission failed.'}{' '}
-                    <a href={buildWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="underline">
+                    {serverError || "Submission failed."}{" "}
+                    <a
+                      href={buildWhatsAppUrl()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline"
+                    >
                       Message via WhatsApp instead →
                     </a>
                   </div>
@@ -342,29 +483,34 @@ export function Contact() {
   );
 }
 
-function Field({ as = 'input', id, label, required, error, options, ...rest }) {
+function Field({ as = "input", id, label, required, error, options, ...rest }) {
   const commonProps = {
     id,
     name: id,
-    'aria-required': required || undefined,
-    'aria-invalid': error ? 'true' : undefined,
-    'aria-describedby': error ? `${id}-error` : undefined,
+    "aria-required": required || undefined,
+    "aria-invalid": error ? "true" : undefined,
+    "aria-describedby": error ? `${id}-error` : undefined,
     onBlur: rest.onBlur,
     onChange: rest.onChange,
     value: rest.value,
     className:
-      'mt-1 block w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-slate-50 placeholder:text-slate-600 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400',
+      "mt-1 block w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-slate-50 placeholder:text-slate-600 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400",
   };
 
   return (
     <div>
       <label htmlFor={id} className="block text-sm font-medium text-slate-200">
-        {label} {required && <span aria-hidden="true" className="text-red-500">*</span>}
+        {label}{" "}
+        {required && (
+          <span aria-hidden="true" className="text-red-500">
+            *
+          </span>
+        )}
       </label>
 
-      {as === 'textarea' ? (
+      {as === "textarea" ? (
         <textarea {...commonProps} {...rest} rows={rest.rows || 4} />
-      ) : as === 'select' ? (
+      ) : as === "select" ? (
         <select {...commonProps} {...rest}>
           {options.map((o) => (
             <option key={o.value} value={o.value}>

@@ -1,0 +1,23 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "MOIZ.UX",
+    "identifier": "moiz-ux.vercel.app"
+  },
+  "entries": [
+    {
+      "identifier": "urn:ai:moiz-ux.vercel.app:knowledge:llms-txt",
+      "displayName": "MOIZ.UX Knowledge Index",
+      "type": "text/plain",
+      "url": "https://moiz-ux.vercel.app/llms.txt",
+      "description": "Curated index of services, process, and portfolio projects for MOIZ.UX."
+    },
+    {
+      "identifier": "urn:ai:moiz-ux.vercel.app:tool:contact-form",
+      "displayName": "Project Enquiry Form",
+      "type": "application/webmcp-tool",
+      "url": "https://moiz-ux.vercel.app/#contact",
+      "description": "Submit a new website project enquiry. Requires name, email, website type, and project description."
+    }
+  ]
+}

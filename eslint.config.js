@@ -34,6 +34,7 @@ export default [
       'react/prop-types': 'off',
       'no-unused-vars': 'warn',
       'react-hooks/exhaustive-deps': 'warn',
+      'react/no-unknown-property': ['error', { ignore: ['toolname', 'tooldescription'] }],
     },
     settings: {
       react: {
