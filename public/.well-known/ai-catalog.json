@@ -18,11 +18,11 @@
       ]
     },
     {
-      "identifier": "urn:air:moiz-ux.vercel.app:tool:contact-form",
-      "displayName": "Project Enquiry Form",
-      "type": "application/mcp-server-card+json",
+      "identifier": "urn:air:moiz-ux.vercel.app:resource:contact-form",
+      "displayName": "MOIZ.UX Project Enquiry Form",
+      "type": "text/html",
       "url": "https://moiz-ux.vercel.app/#contact",
-      "description": "Submit a new website project enquiry.",
+      "description": "Contact Moiz to discuss a website project.",
       "representativeQueries": [
         "How do I hire Moiz for a website project?",
         "Start a new project enquiry with MOIZ.UX"

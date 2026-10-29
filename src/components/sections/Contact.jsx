@@ -67,70 +67,84 @@ function validate(values) {
 
 export function Contact() {
   // Register WebMCP Tool for AI Agents
-  useEffect(() => {
-    if (typeof document !== "undefined" && document.modelContext && !window.isWebMcpRegistered) {
+    useEffect(() => {
+    if (!document.modelContext) {
+      console.info("WebMCP is not available in this browser.");
+      return;
+    }
+
+    const controller = new AbortController();
+
+    async function registerEnquiryTool() {
       try {
-        document.modelContext.registerTool({
-          name: "submit_project_enquiry",
-          description:
-            "Submit a website project enquiry to Moiz. Use this when the user wants to start a project.",
-          inputSchema: {
-            $schema: "http://json-schema.org/draft-07/schema#",
-            type: "object",
-            properties: {
-              name: { type: "string", description: "Full name of the person" },
-              email: { type: "string", format: "email", description: "Valid email address" },
-              websiteType: {
-                type: "string",
-                enum: [
-                  "Landing Page Development",
-                  "Business & Portfolio Website",
-                  "Functional Website",
-                  "Other",
-                ],
-                description: "The type of website they need",
+        await document.modelContext.registerTool(
+          {
+            name: "submit_project_enquiry",
+            description:
+              "Submit a website project enquiry to Moiz. Use when the user wants to start a project.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                name: { type: "string" },
+                email: { type: "string", format: "email" },
+                websiteType: {
+                  type: "string",
+                  enum: [
+                    "Landing Page Development",
+                    "Business & Portfolio Website",
+                    "Functional Website",
+                    "Other",
+                  ],
+                },
+                description: {
+                  type: "string",
+                  minLength: 20,
+                  maxLength: 5000,
+                },
               },
-              description: {
-                type: "string",
-                description: "Details about their project, goals, and requirements",
-              },
+              required: ["name", "email", "websiteType", "description"],
+              additionalProperties: false,
             },
-            required: ["name", "email", "websiteType", "description"],
-            additionalProperties: false,
+            execute: async ({ name, email, websiteType, description }) => {
+              try {
+                const res = await fetch("/api/contact", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    name: sanitizeInput(name),
+                    email: sanitizeInput(email),
+                    website_type: websiteType,
+                    description: sanitizeInput(description),
+                    preferred_contact: "email",
+                    website_hp_field: "",
+                    submittedAt: new Date().toISOString(),
+                  }),
+                });
+
+                if (!res.ok) {
+                  return `Error: Enquiry submission failed (${res.status}).`;
+                }
+
+                return "Success: Enquiry submitted.";
+              } catch {
+                return "Error: Could not submit the enquiry. Please try again.";
+              }
+            },
           },
-          execute: async ({ name, email, websiteType, description }) => {
-            try {
-              const payload = {
-                name,
-                email,
-                website_type: websiteType,
-                description,
-                preferred_contact: "email",
-                website_hp_field: "", // Honeypot bypass for AI
-                submittedAt: new Date().toISOString(),
-              };
-
-              const res = await fetch("/api/contact", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-              });
-
-              if (!res.ok) throw new Error("Server rejected submission");
-
-              return "Success: Enquiry submitted. Moiz will reply within 24 hours.";
-            } catch (error) {
-              return `Error: Failed to submit enquiry. ${error.message}`;
-            }
-          },
-        });
-        window.isWebMcpRegistered = true; // Global flag prevents duplicate registration
-      } catch (err) {
-        if (err.name !== "InvalidStateError") {
-          console.warn("WebMCP registration skipped:", err);
+          { signal: controller.signal } // <-- The magic cleanup signal
+        );
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.error("WebMCP registration failed:", error);
         }
       }
     }
+
+    registerEnquiryTool();
+
+    return () => controller.abort();
   }, []);
 
   const {
