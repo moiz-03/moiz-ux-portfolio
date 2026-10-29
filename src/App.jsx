@@ -25,14 +25,16 @@ export default function App() {
 
       <main id="main" tabIndex="-1" className="outline-none">
         <Hero />
-        <Suspense fallback={<div className="py-20 text-center text-slate-500">Loading...</div>}>
-          <Projects />
-          <Services />
-          <Process />
-          <About />
-          <WhyUs />
-          <Contact />
-        </Suspense>
+        <div className="cv-auto">
+          <Suspense fallback={<div className="min-h-[80vh]" />}>
+            <Projects />
+            <Services />
+            <Process />
+            <About />
+            <WhyUs />
+            <Contact />
+          </Suspense>
+        </div>
       </main>
 
       <Footer />

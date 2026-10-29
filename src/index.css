@@ -33,3 +33,14 @@ html {
   outline-offset: 2px;
   border-radius: 4px;
 }
+
+/* Performance: Skip rendering offscreen sections to save main thread time */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1000px; /* Prevents scrollbar jumping */
+}
+
+/* Performance: Isolate the Hero mockup so it doesn't cause a massive reflow */
+.contain-layout {
+  contain: layout style paint;
+}

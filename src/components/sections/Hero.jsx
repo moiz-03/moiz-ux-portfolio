@@ -4,10 +4,7 @@ import { siteConfig } from "../../data/siteConfig.js";
 
 export function Hero() {
   return (
-    <section
-      id="home"
-      className="relative overflow-hidden border-b border-slate-800/60 min-h-162.5 lg:min-h-187.5"
-    >
+    <section id="home" className="relative overflow-hidden border-b border-slate-800/60 min-h-162.5 lg:min-h-187.5">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,240,255,0.08),transparent_60%)]"
@@ -49,10 +46,8 @@ export function Hero() {
             aria-hidden="true"
             className="absolute -inset-4 rounded-3xl bg-linear-to-* from-cyan-500/10 via-transparent to-blue-600/10 blur-2xl"
           />
-          <div
-            aria-hidden="true"
-            className="relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/80 shadow-2xl"
-          >
+          {/* Added contain-layout here for performance */}
+          <div aria-hidden="true" className="contain-layout relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/80 shadow-2xl">
             <div className="flex items-center gap-2 border-b border-slate-800 bg-slate-900 px-4 py-2.5">
               <span
                 className="h-2.5 w-2.5 rounded-full bg-red-500/60"
@@ -70,19 +65,20 @@ export function Hero() {
                 pixel-quest-aba36.web.app
               </div>
             </div>
-            <div className="aspect-4/3 bg-linear-to-br from-slate-900 via-slate-950 to-blue-950/40 p-6">
-              <div className="aspect-4/3 overflow-hidden bg-slate-950">
-                <img
-                  src="/pixel-quest.webp"
-                  alt="Pixel Quest Dashboard Preview"
-                  className="h-full w-full object-cover object-top opacity-90"
-                />
-              </div>
+            
+            {/* The Image Container */}
+            <div className="aspect-4/3 bg-slate-900 p-6 flex items-center justify-center overflow-hidden">
+              <img 
+                src="/pixel-quest.webp" 
+                alt="Pixel Quest Dashboard Preview" 
+                className="max-h-full max-w-full object-contain rounded-md shadow-2xl border border-slate-700/50"
+              />
             </div>
           </div>
-          <div className="ml-3 flex-1 truncate rounded-md bg-slate-800/70 px-3 py-1 text-[10px] text-slate-400">
-            pixel-quest-aba36.web.app
-          </div>
+          
+          <p className="mt-3 text-right text-[11px] text-slate-400">
+            Preview: Pixel Quest
+          </p>
         </div>
       </div>
     </section>
