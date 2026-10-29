@@ -328,10 +328,11 @@ export function Contact() {
                     Preferred Contact
                   </legend>
                   <div className="mt-2 flex gap-4">
-                    {["email", "whatsapp"].map((opt) => (
+                                        {["email", "whatsapp"].map((opt) => (
                       <label
                         key={opt}
                         className="flex items-center gap-2 text-sm text-slate-300"
+                        title={`Preferred Contact Method: ${opt === "email" ? "Email" : "WhatsApp"}`}
                       >
                         <input
                           type="radio"
@@ -340,6 +341,8 @@ export function Contact() {
                           checked={values.preferredContact === opt}
                           onChange={handleChange}
                           className="h-4 w-4 accent-cyan-400"
+                          title="Preferred Contact Method"
+                          aria-label={`Choose ${opt === "email" ? "Email" : "WhatsApp"}`}
                         />
                         {opt === "email" ? "Email" : "WhatsApp"}
                       </label>
@@ -497,6 +500,8 @@ function Field({ as = "input", id, label, required, error, options, ...rest }) {
     "aria-required": required || undefined,
     "aria-invalid": error ? "true" : undefined,
     "aria-describedby": error ? `${id}-error` : undefined,
+    title: label,
+    "aria-label": `label`,
     onBlur: rest.onBlur,
     onChange: rest.onChange,
     value: rest.value,
