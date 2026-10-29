@@ -6,6 +6,7 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
+  Linkedin,
 } from "lucide-react";
 import { SectionHeading } from "../common/SectionHeading.jsx";
 import { Card } from "../common/Card.jsx";
@@ -261,7 +262,7 @@ export function Contact() {
               </a>
             </Card>
 
-            <Card className="p-5">
+                        <Card className="p-5">
               <a
                 href={siteConfig.instagram.url}
                 target="_blank"
@@ -278,6 +279,29 @@ export function Contact() {
                   </p>
                   <p className="text-xs text-slate-300">
                     Follow along or DM for a quick chat.
+                  </p>
+                </div>
+              </a>
+            </Card>
+
+            {/* ADD THIS NEW CARD */}
+            <Card className="p-5">
+              <a
+                href={siteConfig.linkedin.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-3"
+              >
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400">
+                  <Linkedin className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-slate-50 group-hover:text-cyan-400">
+                    LinkedIn Profile
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </p>
+                  <p className="text-xs text-slate-300">
+                    Connect with me professionally.
                   </p>
                 </div>
               </a>
