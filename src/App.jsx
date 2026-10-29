@@ -1,15 +1,12 @@
-import { lazy, Suspense } from 'react';
 import { Header } from './components/layout/Header.jsx';
 import { Footer } from './components/layout/Footer.jsx';
 import { Hero } from './components/sections/Hero.jsx';
-
-// Lazy load the sections below the fold
-const Projects = lazy(() => import('./components/sections/Projects.jsx').then(m => ({ default: m.Projects })));
-const Services = lazy(() => import('./components/sections/Services.jsx').then(m => ({ default: m.Services })));
-const Process = lazy(() => import('./components/sections/Process.jsx').then(m => ({ default: m.Process })));
-const About = lazy(() => import('./components/sections/About.jsx').then(m => ({ default: m.About })));
-const WhyUs = lazy(() => import('./components/sections/WhyUs.jsx').then(m => ({ default: m.WhyUs })));
-const Contact = lazy(() => import('./components/sections/Contact.jsx').then(m => ({ default: m.Contact })));
+import { Projects } from './components/sections/Projects.jsx';
+import { Services } from './components/sections/Services.jsx';
+import { Process } from './components/sections/Process.jsx';
+import { About } from './components/sections/About.jsx';
+import { WhyUs } from './components/sections/WhyUs.jsx';
+import { Contact } from './components/sections/Contact.jsx';
 
 export default function App() {
   return (
@@ -26,14 +23,12 @@ export default function App() {
       <main id="main" tabIndex="-1" className="outline-none">
         <Hero />
         <div className="cv-auto">
-          <Suspense fallback={<div className="min-h-[80vh]" />}>
-            <Projects />
-            <Services />
-            <Process />
-            <About />
-            <WhyUs />
-            <Contact />
-          </Suspense>
+          <Projects />
+          <Services />
+          <Process />
+          <About />
+          <WhyUs />
+          <Contact />
         </div>
       </main>
 

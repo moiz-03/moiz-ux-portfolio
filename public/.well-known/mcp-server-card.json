@@ -1,0 +1,20 @@
+{
+  "name": "MOIZ.UX Project Enquiry Form",
+  "description": "Submit a website project enquiry to Moiz.",
+  "tools": [
+    {
+      "name": "submit_project_enquiry",
+      "description": "Submit a website project enquiry to Moiz.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "websiteType": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "required": ["name", "email", "websiteType", "description"]
+      }
+    }
+  ]
+}
