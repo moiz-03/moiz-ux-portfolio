@@ -64,89 +64,76 @@ function validate(values) {
     errors.description = "Please keep your description under 5,000 characters.";
   return errors;
 }
-
+let hasRegisteredWebMcp = false;
 export function Contact() {
   // Register WebMCP Tool for AI Agents
-    useEffect(() => {
-    if (!document.modelContext) {
-      console.info("WebMCP is not available in this browser.");
-      return;
-    }
-
-    const controller = new AbortController();
-
-    async function registerEnquiryTool() {
+      useEffect(() => {
+    if (hasRegisteredWebMcp) return;
+    if (typeof document !== "undefined" && document.modelContext) {
       try {
-        await document.modelContext.registerTool(
-          {
-            name: "submit_project_enquiry",
-            description:
-              "Submit a website project enquiry to Moiz. Use when the user wants to start a project.",
-            inputSchema: {
-              type: "object",
-              properties: {
-                name: { type: "string" },
-                email: { type: "string", format: "email" },
-                websiteType: {
-                  type: "string",
-                  enum: [
-                    "Landing Page Development",
-                    "Business & Portfolio Website",
-                    "Functional Website",
-                    "Other",
-                  ],
-                },
-                description: {
-                  type: "string",
-                  minLength: 20,
-                  maxLength: 5000,
-                },
+        document.modelContext.registerTool({
+          name: "submit_project_enquiry",
+          description:
+            "Submit a website project enquiry to Moiz. Use this when the user wants to start a project.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              name: { type: "string", description: "Full name of the person" },
+              email: { type: "string", format: "email", description: "Valid email address" },
+              preferredContact: {
+                type: "string",
+                description: "The user's preferred method of contact.",
+                enum: ["email", "whatsapp"],
               },
-              required: ["name", "email", "websiteType", "description"],
-              additionalProperties: false,
+              websiteType: {
+                type: "string",
+                description: "The type of website they need",
+                enum: [
+                  "Landing Page Development",
+                  "Business & Portfolio Website",
+                  "Functional Website",
+                  "Other",
+                ],
+              },
+              description: {
+                type: "string",
+                description: "Details about their project, goals, and requirements",
+              },
             },
-            execute: async ({ name, email, websiteType, description }) => {
-              try {
-                const res = await fetch("/api/contact", {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    name: sanitizeInput(name),
-                    email: sanitizeInput(email),
-                    website_type: websiteType,
-                    description: sanitizeInput(description),
-                    preferred_contact: "email",
-                    website_hp_field: "",
-                    submittedAt: new Date().toISOString(),
-                  }),
-                });
-
-                if (!res.ok) {
-                  return `Error: Enquiry submission failed (${res.status}).`;
-                }
-
-                return "Success: Enquiry submitted.";
-              } catch {
-                return "Error: Could not submit the enquiry. Please try again.";
-              }
-            },
+            required: ["name", "email", "websiteType", "description"],
+            additionalProperties: false,
           },
-          { signal: controller.signal } // <-- The magic cleanup signal
-        );
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          console.error("WebMCP registration failed:", error);
+          execute: async ({ name, email, websiteType, description }) => {
+            try {
+              const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  name: sanitizeInput(name),
+                  email: sanitizeInput(email),
+                  website_type: websiteType,
+                  description: sanitizeInput(description),
+                  preferred_contact: "email",
+                  website_hp_field: "",
+                  submittedAt: new Date().toISOString(),
+                }),
+              });
+
+              if (!res.ok) return `Error: Enquiry submission failed (${res.status}).`;
+              return "Success: Enquiry submitted.";
+            } catch {
+              return "Error: Could not submit the enquiry. Please try again.";
+            }
+          },
+        });
+        hasRegisteredWebMcp = true;
+      } catch (err) {
+        if (err.name !== "InvalidStateError") {
+          console.warn("WebMCP registration skipped:", err);
         }
       }
     }
-
-    registerEnquiryTool();
-
-    return () => controller.abort();
   }, []);
-
   const {
     values,
     errors,
@@ -344,9 +331,12 @@ export function Contact() {
                     Preferred Contact
                   </legend>
                   <div className="mt-2 flex gap-4">
-                    {["email", "whatsapp"].map((opt) => (
-                      <div key={opt} className="flex items-center gap-2">
-                        {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
+                                        {["email", "whatsapp"].map((opt) => (
+                      <div 
+                        key={opt} 
+                        className="flex items-center gap-2"
+                        title={`Preferred Contact Method: ${opt === "email" ? "Email" : "WhatsApp"}`}
+                      >
                         <input
                           type="radio"
                           id={`contact-${opt}`}
@@ -355,8 +345,8 @@ export function Contact() {
                           checked={values.preferredContact === opt}
                           onChange={handleChange}
                           className="h-4 w-4 accent-cyan-400"
-                          title={`Contact Preference: ${opt === "email" ? "Email" : "WhatsApp"}`}
-                          aria-description={`Select this option to receive a response via ${opt}.`}
+                          title={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
+                          aria-label={`Select ${opt === "email" ? "Email" : "WhatsApp"} as the preferred contact method`}
                         />
                         <label htmlFor={`contact-${opt}`} className="text-sm text-slate-300">
                           {opt === "email" ? "Email" : "WhatsApp"}
