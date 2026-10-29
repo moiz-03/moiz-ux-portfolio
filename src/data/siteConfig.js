@@ -7,13 +7,18 @@ export const siteConfig = Object.freeze({
   description:
     'I build modern landing pages and functional websites that help brands showcase what they do, connect with customers, and grow their online presence.',
   email: 'code.moiz2003@gmail.com',
+  // Obfuscated for humans to read, but bots struggle to scrape this
+  displayEmail: 'code.moiz2003 [at] gmail [dot] com', 
   whatsapp: {
-    number: '923354880723', // E.164 without "+" — replace with real number
+    number: '923354880723', // E.164 without "+"
     prefilledMessage: "Hi Moiz! I came across your portfolio and I'd like to discuss a website project.",
   },
   instagram: {
     handle: '@moiz.ux',
     url: 'https://instagram.com/moiz.ux',
+  },
+  linkedin: {
+    url: 'https://www.linkedin.com/in/moiz-imran-b94207367/', // <-- Updated
   },
   nav: [
     { label: 'Home', href: '#home' },

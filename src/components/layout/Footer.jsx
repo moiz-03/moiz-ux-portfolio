@@ -50,7 +50,7 @@ export function Footer() {
                   className="inline-flex items-center gap-2 text-sm text-slate-300 transition-colors hover:text-cyan-400"
                 >
                   <Mail className="h-4 w-4" aria-hidden="true" />
-                  {siteConfig.email}
+                  {siteConfig.displayEmail}
                 </a>
               </li>
               <li>
@@ -74,6 +74,18 @@ export function Footer() {
                 >
                   <Instagram className="h-4 w-4" aria-hidden="true" />
                   {siteConfig.instagram.handle}
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href={siteConfig.linkedin.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm text-slate-300 transition-colors hover:text-cyan-400"
+                >
+                  <Linkedin className="h-4 w-4" aria-hidden="true" />
+                  LinkedIn
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </li>

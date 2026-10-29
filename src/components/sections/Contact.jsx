@@ -64,10 +64,12 @@ function validate(values) {
     errors.description = "Please keep your description under 5,000 characters.";
   return errors;
 }
+
 let hasRegisteredWebMcp = false;
+
 export function Contact() {
   // Register WebMCP Tool for AI Agents
-      useEffect(() => {
+  useEffect(() => {
     if (hasRegisteredWebMcp) return;
     if (typeof document !== "undefined" && document.modelContext) {
       try {
@@ -134,6 +136,7 @@ export function Contact() {
       }
     }
   }, []);
+
   const {
     values,
     errors,
@@ -249,7 +252,7 @@ export function Contact() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold text-slate-50 group-hover:text-cyan-400">
-                    {siteConfig.email}
+                    {siteConfig.displayEmail} {/* FIXED: Obfuscated Email */}
                   </p>
                   <p className="text-xs text-slate-300">
                     Send a detailed brief by email.
@@ -331,7 +334,7 @@ export function Contact() {
                     Preferred Contact
                   </legend>
                   <div className="mt-2 flex gap-4">
-                                        {["email", "whatsapp"].map((opt) => (
+                    {["email", "whatsapp"].map((opt) => (
                       <div 
                         key={opt} 
                         className="flex items-center gap-2"
@@ -508,7 +511,7 @@ function Field({ as = "input", id, label, required, error, options, ...rest }) {
     "aria-invalid": error ? "true" : undefined,
     "aria-describedby": error ? `${id}-error` : undefined,
     title: label,
-    "aria-label": label, // Fixed: was hardcoded to the string "label"
+    "aria-label": label,
     onBlur: rest.onBlur,
     onChange: rest.onChange,
     value: rest.value,
