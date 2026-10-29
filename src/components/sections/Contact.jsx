@@ -135,7 +135,9 @@ export function Contact() {
         });
         isWebMcpRegistered = true; // Mark as registered
       } catch (err) {
-        console.warn("WebMCP registration skipped:", err);
+        if (err.name !== "InvalidStateError") {
+          console.warn("WebMCP registration skipped:", err);
+        }
       }
     }
   }, []);
@@ -337,23 +339,21 @@ export function Contact() {
                   </legend>
                   <div className="mt-2 flex gap-4">
                                         {["email", "whatsapp"].map((opt) => (
-                      <label
-                        key={opt}
-                        className="flex items-center gap-2 text-sm text-slate-300"
-                      >
-                        {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
+                      <div key={opt} className="flex items-center gap-2">
                         <input
                           type="radio"
+                          id={`contact-${opt}`}
                           name="preferredContact"
                           value={opt}
                           checked={values.preferredContact === opt}
                           onChange={handleChange}
                           className="h-4 w-4 accent-cyan-400"
-                          title={`Preferred Contact Method: ${opt === "email" ? "Email" : "WhatsApp"}`}
-                          aria-description={`Choose ${opt === "email" ? "Email" : "WhatsApp"} as the preferred way to be contacted.`}
+                          title={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
                         />
-                        {opt === "email" ? "Email" : "WhatsApp"}
-                      </label>
+                        <label htmlFor={`contact-${opt}`} className="text-sm text-slate-300">
+                          {opt === "email" ? "Email" : "WhatsApp"}
+                        </label>
+                      </div>
                     ))}
                   </div>
                 </fieldset>

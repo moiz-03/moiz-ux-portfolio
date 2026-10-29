@@ -8,7 +8,7 @@
     {
       "identifier": "urn:air:moiz-ux.vercel.app:knowledge:llms-txt",
       "displayName": "MOIZ.UX Knowledge Index",
-      "type": "text/markdown",
+      "type": "text/markdown; profile=\"urn:air:agent-skills\"",
       "url": "https://moiz-ux.vercel.app/llms.txt",
       "description": "Curated index of services, process, and portfolio projects for MOIZ.UX.",
       "representativeQueries": [
