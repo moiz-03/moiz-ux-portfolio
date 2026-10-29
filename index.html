@@ -115,15 +115,19 @@
   <div id="root">
     <main id="main" class="loading-shell">
       <div class="loading-content">
-        <h1 class="loading-title" style="font-size: 1rem; color: transparent; height: 0; overflow: hidden;">
-          Websites That Give Your Brand a Stronger Online Presence
-        </h1>
+        <!-- Changed from <h1> to <div> to prevent duplicate with React -->
+        <div class="loading-title">
+          MOIZ<span class="loading-accent">.UX</span>
+        </div>
         <p class="loading-text">Loading...</p>
       </div>
     </main>
 
     <!-- SEO Fallback Content (Hidden from users, read by bots) -->
     <div style="display: none;" aria-hidden="true">
+      <!-- Unique H1 for SEO that won't conflict with the React app -->
+      <h1>MOIZ.UX | Web Developer Portfolio</h1>
+
       <p>
         MOIZ.UX is a professional Web Developer Portfolio specializing in modern landing pages and functional websites
         that help brands showcase what they do, connect with customers, and grow their online presence.
@@ -162,13 +166,21 @@
         <li><a href="/privacy">Privacy Policy</a></li>
         <li><a href="/terms">Terms of Use</a></li>
       </ul>
-            <p><strong>Social Sharing Links:</strong></p>
+
+      <p><strong>Social Sharing Links:</strong></p>
       <ul>
-        <li><a href="https://twitter.com/intent/tweet?url=https://moiz-ux.vercel.app&text=Check%20out%20MOIZ.UX%20%E2%80%94%20Web%20Developer%20Portfolio" target="_blank" rel="noopener noreferrer">Share on X (Twitter)</a></li>
-        <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=https://moiz-ux.vercel.app" target="_blank" rel="noopener noreferrer">Share on LinkedIn</a></li>
-        <li><a href="https://api.whatsapp.com/send?text=Check%20out%20MOIZ.UX%20%E2%80%94%20Web%20Developer%20Portfolio%20https://moiz-ux.vercel.app" target="_blank" rel="noopener noreferrer">Share on WhatsApp</a></li>
-        <li><a href="https://www.facebook.com/sharer/sharer.php?u=https://moiz-ux.vercel.app" target="_blank" rel="noopener noreferrer">Share on Facebook</a></li>
+        <li><a
+            href="https://twitter.com/intent/tweet?url=https://moiz-ux.vercel.app&text=Check%20out%20MOIZ.UX%20%E2%80%94%20Web%20Developer%20Portfolio"
+            target="_blank" rel="noopener noreferrer">Share on X (Twitter)</a></li>
+        <li><a href="https://www.linkedin.com/sharing/share-offsite/?url=https://moiz-ux.vercel.app" target="_blank"
+            rel="noopener noreferrer">Share on LinkedIn</a></li>
+        <li><a
+            href="https://api.whatsapp.com/send?text=Check%20out%20MOIZ.UX%20%E2%80%94%20Web%20Developer%20Portfolio%20https://moiz-ux.vercel.app"
+            target="_blank" rel="noopener noreferrer">Share on WhatsApp</a></li>
+        <li><a href="https://www.facebook.com/sharer/sharer.php?u=https://moiz-ux.vercel.app" target="_blank"
+            rel="noopener noreferrer">Share on Facebook</a></li>
       </ul>
+
       <p><strong>External Links:</strong></p>
       <ul>
         <li><a href="https://github.com/moiz-03" target="_blank" rel="noopener noreferrer">GitHub</a></li>
