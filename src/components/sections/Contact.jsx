@@ -64,15 +64,11 @@ function validate(values) {
     errors.description = "Please keep your description under 5,000 characters.";
   return errors;
 }
-let isWebMcpRegistered = false;
+
 export function Contact() {
   // Register WebMCP Tool for AI Agents
   useEffect(() => {
-    if (
-      typeof document !== "undefined" &&
-      document.modelContext &&
-      !isWebMcpRegistered
-    ) {
+    if (typeof document !== "undefined" && document.modelContext && !window.isWebMcpRegistered) {
       try {
         document.modelContext.registerTool({
           name: "submit_project_enquiry",
@@ -83,11 +79,7 @@ export function Contact() {
             type: "object",
             properties: {
               name: { type: "string", description: "Full name of the person" },
-              email: {
-                type: "string",
-                format: "email",
-                description: "Valid email address",
-              },
+              email: { type: "string", format: "email", description: "Valid email address" },
               websiteType: {
                 type: "string",
                 enum: [
@@ -100,8 +92,7 @@ export function Contact() {
               },
               description: {
                 type: "string",
-                description:
-                  "Details about their project, goals, and requirements",
+                description: "Details about their project, goals, and requirements",
               },
             },
             required: ["name", "email", "websiteType", "description"],
@@ -133,7 +124,7 @@ export function Contact() {
             }
           },
         });
-        isWebMcpRegistered = true; // Mark as registered
+        window.isWebMcpRegistered = true; // Global flag prevents duplicate registration
       } catch (err) {
         if (err.name !== "InvalidStateError") {
           console.warn("WebMCP registration skipped:", err);
@@ -141,6 +132,7 @@ export function Contact() {
       }
     }
   }, []);
+
   const {
     values,
     errors,
@@ -338,7 +330,7 @@ export function Contact() {
                     Preferred Contact
                   </legend>
                   <div className="mt-2 flex gap-4">
-                                        {["email", "whatsapp"].map((opt) => (
+                    {["email", "whatsapp"].map((opt) => (
                       <div key={opt} className="flex items-center gap-2">
                         {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
                         <input
@@ -512,7 +504,7 @@ function Field({ as = "input", id, label, required, error, options, ...rest }) {
     "aria-invalid": error ? "true" : undefined,
     "aria-describedby": error ? `${id}-error` : undefined,
     title: label,
-    "aria-label": `label`,
+    "aria-label": label, // Fixed: was hardcoded to the string "label"
     onBlur: rest.onBlur,
     onChange: rest.onChange,
     value: rest.value,

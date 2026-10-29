@@ -22,7 +22,7 @@
       "displayName": "Project Enquiry Form",
       "type": "application/mcp-server-card+json",
       "url": "https://moiz-ux.vercel.app/#contact",
-      "description": "Submit a new website project enquiry. Requires name, email, website type, and project description.",
+      "description": "Submit a new website project enquiry.",
       "representativeQueries": [
         "How do I hire Moiz for a website project?",
         "Start a new project enquiry with MOIZ.UX"
