@@ -66,9 +66,13 @@ function validate(values) {
 }
 let isWebMcpRegistered = false;
 export function Contact() {
-    // Register WebMCP Tool for AI Agents
+  // Register WebMCP Tool for AI Agents
   useEffect(() => {
-    if (typeof document !== "undefined" && document.modelContext && !isWebMcpRegistered) {
+    if (
+      typeof document !== "undefined" &&
+      document.modelContext &&
+      !isWebMcpRegistered
+    ) {
       try {
         document.modelContext.registerTool({
           name: "submit_project_enquiry",
@@ -79,7 +83,11 @@ export function Contact() {
             type: "object",
             properties: {
               name: { type: "string", description: "Full name of the person" },
-              email: { type: "string", format: "email", description: "Valid email address" },
+              email: {
+                type: "string",
+                format: "email",
+                description: "Valid email address",
+              },
               websiteType: {
                 type: "string",
                 enum: [
@@ -332,8 +340,8 @@ export function Contact() {
                       <label
                         key={opt}
                         className="flex items-center gap-2 text-sm text-slate-300"
-                        title={`Preferred Contact Method: ${opt === "email" ? "Email" : "WhatsApp"}`}
                       >
+                        {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
                         <input
                           type="radio"
                           name="preferredContact"
@@ -341,8 +349,8 @@ export function Contact() {
                           checked={values.preferredContact === opt}
                           onChange={handleChange}
                           className="h-4 w-4 accent-cyan-400"
-                          title="Preferred Contact Method"
-                          aria-label={`Choose ${opt === "email" ? "Email" : "WhatsApp"}`}
+                          title={`Preferred Contact Method: ${opt === "email" ? "Email" : "WhatsApp"}`}
+                          aria-description={`Choose ${opt === "email" ? "Email" : "WhatsApp"} as the preferred way to be contacted.`}
                         />
                         {opt === "email" ? "Email" : "WhatsApp"}
                       </label>
@@ -440,6 +448,7 @@ export function Contact() {
                   autoComplete="off"
                   value={values.website_hp_field}
                   onChange={handleChange}
+                  data-webmcp-ignore="true"
                 />
               </div>
 
