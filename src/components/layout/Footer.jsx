@@ -82,7 +82,7 @@ export function Footer() {
           <ul className="flex flex-wrap items-center gap-4">
             <li>
               <a
-                href="/privacy.html"
+                href="/privacy"
                 className="transition-colors hover:text-cyan-400"
               >
                 Privacy
@@ -90,7 +90,7 @@ export function Footer() {
             </li>
             <li>
               <a
-                href="/terms.html"
+                href="/terms"
                 className="transition-colors hover:text-cyan-400"
               >
                 Terms
