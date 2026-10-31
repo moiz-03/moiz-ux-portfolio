@@ -33,6 +33,10 @@ export const siteConfig = Object.freeze({
     { label: 'About', href: '#about' },
     { label: 'Contact', href: '#contact' },
   ],
+  phone: {
+    display: '+92 335 4880723',
+    link: 'tel:+923354880723',
+  },
 });
 
 /** Build wa.me URL with prefilled message. */
