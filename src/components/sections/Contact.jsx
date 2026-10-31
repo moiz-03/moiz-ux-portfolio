@@ -82,10 +82,14 @@ let hasRegisteredWebMcp = false;
 export function Contact() {
   // Register WebMCP Tool for AI Agents
   useEffect(() => {
+    // 1. Check and set the flag IMMEDIATELY to block StrictMode's second render
     if (hasRegisteredWebMcp) return;
+    hasRegisteredWebMcp = true;
+
     if (typeof document !== "undefined" && document.modelContext) {
-      try {
-        document.modelContext.registerTool({
+      // 2. Attach a .catch() directly to the promise to handle the rejection silently
+      document.modelContext
+        .registerTool({
           name: "submit_project_enquiry",
           description:
             "Submit a website project enquiry to Moiz. Use this when the user wants to start a project.",
@@ -145,13 +149,13 @@ export function Contact() {
               return "Error: Could not submit the enquiry. Please try again.";
             }
           },
+        })
+        .catch((err) => {
+          // 3. Silently swallow the duplicate error
+          if (err.name !== "InvalidStateError") {
+            console.warn("WebMCP registration skipped:", err);
+          }
         });
-        hasRegisteredWebMcp = true;
-      } catch (err) {
-        if (err.name !== "InvalidStateError") {
-          console.warn("WebMCP registration skipped:", err);
-        }
-      }
     }
   }, []);
 
@@ -542,9 +546,7 @@ export function Contact() {
                     ) : (
                       <AlertCircle className="h-4 w-4" aria-hidden="true" />
                     )}
-                    
                     {serverError || "Submission failed."}{" "}
-                    
                     <a
                       href={buildWhatsAppUrl()}
                       target="_blank"
