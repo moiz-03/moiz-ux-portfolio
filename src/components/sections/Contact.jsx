@@ -381,7 +381,11 @@ export function Contact() {
                   error={touched.email && errors.email}
                   autoComplete="email"
                 />
-                <fieldset className="border-0 p-0 m-0">
+                                <fieldset 
+                  className="border-0 p-0 m-0"
+                  toolparamtitle="Preferred Contact Method"
+                  toolparamdescription="Select how you would like Moiz to contact you."
+                >
                   <legend className="block text-sm font-medium text-slate-200">
                     Preferred Contact
                   </legend>
@@ -397,8 +401,6 @@ export function Contact() {
                           onChange={handleChange}
                           className="h-4 w-4 accent-cyan-400"
                           title={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
-                          toolparamtitle={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
-                          toolparamdescription={`Select this option to receive a response via ${opt}.`}
                         />
                         <label htmlFor={`contact-${opt}`} className="text-sm text-slate-300">
                           {opt === "email" ? "Email" : "WhatsApp"}
