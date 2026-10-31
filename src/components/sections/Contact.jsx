@@ -381,9 +381,8 @@ export function Contact() {
                   error={touched.email && errors.email}
                   autoComplete="email"
                 />
-                                <fieldset 
+                <fieldset
                   className="border-0 p-0 m-0"
-                  toolparamtitle="Preferred Contact Method"
                   toolparamdescription="Select how you would like Moiz to contact you."
                 >
                   <legend className="block text-sm font-medium text-slate-200">
@@ -400,9 +399,13 @@ export function Contact() {
                           checked={values.preferredContact === opt}
                           onChange={handleChange}
                           className="h-4 w-4 accent-cyan-400"
+                          toolparamtitle={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
                           title={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
                         />
-                        <label htmlFor={`contact-${opt}`} className="text-sm text-slate-300">
+                        <label
+                          htmlFor={`contact-${opt}`}
+                          className="text-sm text-slate-300"
+                        >
                           {opt === "email" ? "Email" : "WhatsApp"}
                         </label>
                       </div>
@@ -479,7 +482,7 @@ export function Contact() {
                 />
               </div>
 
-              {/* Honeypot */}
+              {/* Honeypot — hidden off-screen, must remain empty */}
               <div
                 aria-hidden="true"
                 style={{
@@ -500,7 +503,8 @@ export function Contact() {
                   autoComplete="off"
                   value={values.website_hp_field}
                   onChange={handleChange}
-                  data-webmcp-ignore="true"
+                  toolparamtitle="Leave this field empty"
+                  toolparamdescription="This field is for spam prevention. Do not fill it."
                 />
               </div>
 
@@ -559,7 +563,6 @@ export function Contact() {
 }
 
 function Field({ as = "input", id, label, required, error, options, ...rest }) {
-  // Strip trailing asterisk for cleaner tool descriptions
   const cleanLabel = label.replace(' *', '').toLowerCase();
 
   const commonProps = {
