@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Instagram, Mail, MessageCircle, Share2, Linkedin, Twitter, Link as LinkIcon, Check } from 'lucide-react';
+import { Instagram, Mail, MessageCircle, Share2, Linkedin, Twitter, Link as LinkIcon, Check, Phone } from 'lucide-react';
 import { siteConfig, buildWhatsAppUrl, buildMailtoUrl } from '../../data/siteConfig.js';
 
 export function Footer() {
@@ -63,6 +63,16 @@ export function Footer() {
                   <MessageCircle className="h-4 w-4" aria-hidden="true" />
                   WhatsApp
                   <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </li>
+              {/* NEW CLICKABLE PHONE NUMBER */}
+              <li>
+                <a
+                  href={siteConfig.phone.link}
+                  className="inline-flex items-center gap-2 text-sm text-slate-300 transition-colors hover:text-cyan-400"
+                >
+                  <Phone className="h-4 w-4" aria-hidden="true" />
+                  {siteConfig.phone.display}
                 </a>
               </li>
               <li>
