@@ -13,7 +13,7 @@ export function useFormValidation(initialValues, validate) {
     if (typeof nextValue === 'string') {
       if (name === 'name') {
         // This regex STRICTLY blocks ., &, ", #, numbers, etc.
-        nextValue = nextValue.replace(/[^a-zA-Z\s-']/g, '');
+        nextValue = nextValue.replace(/[^a-zA-Z\s]/g, '');
       } else if (name === 'businessName') {
         // Business names can have numbers and ampersands.
         nextValue = nextValue.replace(/[^a-zA-Z0-9\s-'&.]/g, '');
