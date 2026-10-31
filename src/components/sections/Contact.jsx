@@ -47,12 +47,12 @@ function validate(values) {
   
   if (!values.name.trim()) {
     errors.name = "Please enter your name.";
-  } else if (!/[a-zA-Z]/.test(values.name)) {
-    errors.name = "Please enter a valid name (letters only).";
+  } else if (!/^[a-zA-Z\s-']+$/.test(values.name)) {
+    // STRICT: If it contains anything other than letters, spaces, hyphens, or apostrophes, reject it.
+    errors.name = "Name can only contain letters, spaces, hyphens, and apostrophes.";
   } else if (values.name.trim().length > 100) {
     errors.name = "Please keep your name under 100 characters.";
   }
-
   if (values.businessName && values.businessName.trim().length > 100)
     errors.businessName =
       "Please keep your business name under 100 characters.";
