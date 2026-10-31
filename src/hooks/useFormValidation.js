@@ -9,17 +9,16 @@ export function useFormValidation(initialValues, validate) {
     const { name, value, type, checked } = e.target;
     let nextValue = type === 'checkbox' ? checked : value;
 
-    // --- CHARACTER FILTERING ---
+    // --- STRICT CHARACTER FILTERING ---
     if (typeof nextValue === 'string') {
       if (name === 'name') {
-        // STRICT: Allow ONLY letters, spaces, hyphens, and apostrophes. 
-        // Blocks numbers, &, ., ", etc.
+        // This regex STRICTLY blocks ., &, ", #, numbers, etc.
         nextValue = nextValue.replace(/[^a-zA-Z\s-']/g, '');
       } else if (name === 'businessName') {
-        // Business: Allow letters, numbers, spaces, hyphens, apostrophes, and ampersands (e.g. "Barnes & Noble")
+        // Business names can have numbers and ampersands.
         nextValue = nextValue.replace(/[^a-zA-Z0-9\s-'&.]/g, '');
       } else if (name === 'email') {
-        // Email: Allow only standard email characters
+        // Emails need standard email characters.
         nextValue = nextValue.replace(/[^a-zA-Z0-9@._%+-]/g, '');
       }
     }
