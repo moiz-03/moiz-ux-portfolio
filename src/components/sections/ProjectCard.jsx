@@ -16,31 +16,35 @@ export function ProjectCard({ project }) {
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-900/70 transition-colors hover:border-cyan-400/40">
       {/* Project Image */}
       {/* Project Image */}
-      <div className="relative aspect-4/3 overflow-hidden border-b border-slate-800 bg-slate-900 flex items-center justify-center p-4">
+            <div className="relative aspect-4/3 overflow-hidden border-b border-slate-800 bg-slate-900 flex items-center justify-center p-4">
         {project.imageUrl ? (
           <>
+            {/* Skeleton Loader */}
+            <div 
+              id={`skeleton-${project.id}`}
+              className="absolute inset-0 flex flex-col items-center justify-center bg-slate-800 animate-pulse text-slate-400"
+            >
+              <span className="text-sm font-medium">Loading...</span>
+            </div>
+
             <img
               src={project.imageUrl}
               width="694"
               height="364"
               alt={`${title} screenshot`}
-              className="w-full h-auto max-h-full object-contain rounded-md shadow-2xl transition-transform duration-500 group-hover:scale-105"
+              className="w-full h-auto max-h-full object-contain rounded-md shadow-2xl transition-all duration-500 group-hover:scale-105 relative z-10 opacity-0"
+              onLoad={(e) => {
+                document.getElementById(`skeleton-${project.id}`).style.display = 'none';
+                e.target.classList.replace('opacity-0', 'opacity-100');
+              }}
               onError={(e) => {
-                e.target.style.display = "none";
-                e.target.nextSibling.style.display = "flex";
+                e.target.style.display = 'none';
+                document.getElementById(`skeleton-${project.id}`).innerHTML = '<span class="text-sm font-medium">Image unavailable</span>';
               }}
             />
-            <div
-              style={{ display: "none" }}
-              className="absolute inset-0 flex-col items-center justify-center bg-slate-800 text-slate-400"
-            >
-              <span className="text-sm font-medium">Image unavailable</span>
-            </div>
           </>
         ) : (
-          <div
-            className={`absolute inset-0 bg-linear-to-br ${accent ?? "from-cyan-500/20 to-blue-600/20"}`}
-          />
+          <div className={`absolute inset-0 bg-linear-to-br ${accent ?? 'from-cyan-500/20 to-blue-600/20'}`} />
         )}
       </div>
 

@@ -71,31 +71,38 @@ export function Hero() {
                 pixel-quest-aba36.web.app
               </div>
             </div>
-
             {/* The Image Container */}
             <div className="aspect-4/3 bg-slate-900 p-6 flex items-center justify-center overflow-hidden relative">
+              {/* Skeleton Loader */}
+              <div
+                id="hero-skeleton"
+                className="absolute inset-0 flex flex-col items-center justify-center bg-slate-800 animate-pulse text-slate-400"
+              >
+                <span className="text-sm font-medium">Loading preview...</span>
+              </div>
+
               <img
                 src="/pixel-quest.webp"
                 width="694"
                 height="364"
                 alt="Pixel Quest Dashboard Preview"
                 fetchPriority="high"
-                className="w-full h-auto max-h-full object-contain rounded-md shadow-2xl border border-slate-700/50 transition-opacity duration-300"
+                className="w-full h-auto max-h-full object-contain rounded-md shadow-2xl border border-slate-700/50 relative z-10 opacity-0 transition-opacity duration-500"
+                onLoad={(e) => {
+                  // Hide the skeleton and fade in the image once loaded
+                  document.getElementById("hero-skeleton").style.display =
+                    "none";
+                  e.target.classList.replace("opacity-0", "opacity-100");
+                }}
                 onError={(e) => {
-                  // Hides the broken image icon
                   e.target.style.display = "none";
-                  // Shows the fallback text
-                  e.target.nextSibling.style.display = "flex";
+                  const skeleton = document.getElementById("hero-skeleton");
+                  skeleton.innerHTML =
+                    '<span class="text-sm font-medium">Preview unavailable</span>';
+                  skeleton.classList.remove("animate-pulse");
                 }}
               />
-              {/* Fallback element (hidden by default) */}
-              <div
-                style={{ display: "none" }}
-                className="absolute inset-0 flex-col items-center justify-center bg-slate-800 text-slate-400"
-              >
-                <span className="text-sm font-medium">Preview unavailable</span>
-              </div>
-            </div>
+            </div>{" "}
           </div>
 
           <p className="mt-3 text-right text-[11px] text-slate-400">
