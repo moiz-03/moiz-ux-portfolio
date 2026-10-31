@@ -328,6 +328,7 @@ export function Contact() {
                   onBlur={handleBlur}
                   error={touched.name && errors.name}
                   autoComplete="name"
+                  autoCapitalize="words"
                 />
                 <Field
                   id="businessName"
@@ -337,6 +338,7 @@ export function Contact() {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   autoComplete="organization"
+                  autoCapitalize="words"
                 />
               </div>
 
@@ -344,6 +346,8 @@ export function Contact() {
                 <Field
                   id="email"
                   type="email"
+                  inputMode="email"
+                  spellCheck="false"
                   label="Email"
                   required
                   maxLength={254}
@@ -539,6 +543,10 @@ function Field({ as = "input", id, label, required, error, options, ...rest }) {
     onBlur: rest.onBlur,
     onChange: rest.onChange,
     value: rest.value,
+    // Ensure inputMode and autoCapitalize are passed to the input
+    inputMode: rest.inputMode, 
+    autoCapitalize: rest.autoCapitalize,
+    spellCheck: rest.spellCheck,
     className:
       "mt-1 block w-full rounded-lg border border-slate-800 bg-slate-950 px-3 py-2.5 text-sm text-slate-50 placeholder:text-slate-600 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400",
   };
