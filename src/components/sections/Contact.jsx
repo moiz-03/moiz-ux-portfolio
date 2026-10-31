@@ -49,7 +49,6 @@ function validate(values) {
   if (!values.name.trim()) {
     errors.name = "Please enter your name.";
   } else if (!/^[a-zA-Z\s]+$/.test(values.name)) {
-    // STRICT: If it contains anything other than letters, spaces, hyphens, or apostrophes, reject it.
     errors.name = "Name can only contain letters and spaces.";
   } else if (values.name.trim().length > 100) {
     errors.name = "Please keep your name under 100 characters.";
@@ -82,12 +81,10 @@ let hasRegisteredWebMcp = false;
 export function Contact() {
   // Register WebMCP Tool for AI Agents
   useEffect(() => {
-    // 1. Check and set the flag IMMEDIATELY to block StrictMode's second render
     if (hasRegisteredWebMcp) return;
     hasRegisteredWebMcp = true;
 
     if (typeof document !== "undefined" && document.modelContext) {
-      // 2. Attach a .catch() directly to the promise to handle the rejection silently
       document.modelContext
         .registerTool({
           name: "submit_project_enquiry",
@@ -151,7 +148,6 @@ export function Contact() {
           },
         })
         .catch((err) => {
-          // 3. Silently swallow the duplicate error
           if (err.name !== "InvalidStateError") {
             console.warn("WebMCP registration skipped:", err);
           }
@@ -183,7 +179,7 @@ export function Contact() {
       return;
     }
 
-    // Honeypot check (belt-and-braces — server also checks)
+    // Honeypot check
     if (values.website_hp_field) {
       setStatus("success");
       return;
@@ -212,7 +208,7 @@ export function Contact() {
     };
 
     try {
-      // Dev fallback: no serverless function yet — simulate success so the flow can be tested.
+      // Dev fallback
       if (import.meta.env.DEV) {
         await new Promise((r) => setTimeout(r, 900));
         console.info("[dev] simulated contact payload:", payload);
@@ -389,14 +385,9 @@ export function Contact() {
                   <legend className="block text-sm font-medium text-slate-200">
                     Preferred Contact
                   </legend>
-                                    <div className="mt-2 flex gap-4">
+                  <div className="mt-2 flex gap-4">
                     {["email", "whatsapp"].map((opt) => (
-                      <div 
-                        key={opt} 
-                        className="flex items-center gap-2"
-                      >
-                        {/* Disable ESLint for this block to satisfy Chrome's WebMCP validator */}
-                        {/* eslint-disable jsx-a11y/role-supports-aria-props */}
+                      <div key={opt} className="flex items-center gap-2">
                         <input
                           type="radio"
                           id={`contact-${opt}`}
@@ -406,10 +397,9 @@ export function Contact() {
                           onChange={handleChange}
                           className="h-4 w-4 accent-cyan-400"
                           title={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
-                          aria-description={`Select this option to receive a response via ${opt}.`}
+                          toolparamtitle={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
+                          toolparamdescription={`Select this option to receive a response via ${opt}.`}
                         />
-                        {/* eslint-enable jsx-a11y/role-supports-aria-props */}
-                        
                         <label htmlFor={`contact-${opt}`} className="text-sm text-slate-300">
                           {opt === "email" ? "Email" : "WhatsApp"}
                         </label>
@@ -487,7 +477,7 @@ export function Contact() {
                 />
               </div>
 
-              {/* Honeypot — hidden off-screen, must remain empty */}
+              {/* Honeypot */}
               <div
                 aria-hidden="true"
                 style={{
@@ -567,6 +557,9 @@ export function Contact() {
 }
 
 function Field({ as = "input", id, label, required, error, options, ...rest }) {
+  // Strip trailing asterisk for cleaner tool descriptions
+  const cleanLabel = label.replace(' *', '').toLowerCase();
+
   const commonProps = {
     id,
     name: id,
@@ -575,10 +568,14 @@ function Field({ as = "input", id, label, required, error, options, ...rest }) {
     "aria-describedby": error ? `${id}-error` : undefined,
     title: label,
     "aria-label": label,
+    
+    // WebMCP Declarative Tool Attributes
+    toolparamtitle: label,
+    toolparamdescription: `Please provide your ${cleanLabel}`,
+    
     onBlur: rest.onBlur,
     onChange: rest.onChange,
     value: rest.value,
-    // Ensure inputMode and autoCapitalize are passed to the input
     inputMode: rest.inputMode,
     autoCapitalize: rest.autoCapitalize,
     spellCheck: rest.spellCheck,
