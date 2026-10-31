@@ -6,6 +6,8 @@ export const services = [
     id: 'srv-landing',
     title: 'Landing Pages',
     subtitle: 'Focused single-page experiences',
+    price: 'From $300',
+    timeline: '5–7 days',
     targetAudience: 'Brands, products, services, and campaigns that need a focused web presence.',
     deliverables: [
       'Hero section with a clear value proposition',
@@ -24,6 +26,8 @@ export const services = [
     id: 'srv-business',
     title: 'Business & Portfolio Websites',
     subtitle: 'Multi-page brand home',
+    price: 'From $600',
+    timeline: '2–3 weeks',
     targetAudience: 'Businesses, creators, and professionals needing a comprehensive presentation.',
     deliverables: [
       'Home page',
@@ -41,6 +45,8 @@ export const services = [
     id: 'srv-functional',
     title: 'Functional Websites',
     subtitle: 'Beyond static content',
+    price: 'From $1000',
+    timeline: '3–5 weeks',
     targetAudience: 'Clients who need dynamic functionality, not just informational pages.',
     deliverables: [
       'Contact and enquiry forms',

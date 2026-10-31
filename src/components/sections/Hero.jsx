@@ -30,7 +30,7 @@ export function Hero() {
             {siteConfig.description}
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+                    <div className="mt-8 flex flex-wrap items-center gap-3">
             <Button as="a" href="#contact" size="lg">
               Let&apos;s Build Your Website
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -41,6 +41,22 @@ export function Hero() {
             >
               or explore my work →
             </a>
+          </div>
+
+          {/* ADD THIS SOCIAL PROOF BLOCK */}
+          <div className="mt-10 border-t border-slate-800 pt-6 flex gap-8">
+            <div>
+              <p className="text-2xl font-bold text-slate-50">100</p>
+              <p className="text-xs text-slate-400 uppercase tracking-wide">Lighthouse Score</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-slate-50">&lt;1s</p>
+              <p className="text-xs text-slate-400 uppercase tracking-wide">Load Time</p>
+            </div>
+            <div>
+              <p className="text-2xl font-bold text-slate-50">100%</p>
+              <p className="text-xs text-slate-400 uppercase tracking-wide">Mobile Responsive</p>
+            </div>
           </div>
         </div>
 

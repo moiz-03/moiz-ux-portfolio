@@ -16,11 +16,11 @@ export function ProjectCard({ project }) {
     <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-slate-800 bg-slate-900/70 transition-colors hover:border-cyan-400/40">
       {/* Project Image */}
       {/* Project Image */}
-            <div className="relative aspect-4/3 overflow-hidden border-b border-slate-800 bg-slate-900 flex items-center justify-center p-4">
+      <div className="relative aspect-4/3 overflow-hidden border-b border-slate-800 bg-slate-900 flex items-center justify-center p-4">
         {project.imageUrl ? (
           <>
             {/* Skeleton Loader */}
-            <div 
+            <div
               id={`skeleton-${project.id}`}
               className="absolute inset-0 flex flex-col items-center justify-center bg-slate-800 animate-pulse text-slate-400"
             >
@@ -34,17 +34,22 @@ export function ProjectCard({ project }) {
               alt={`${title} screenshot`}
               className="w-full h-auto max-h-full object-contain rounded-md shadow-2xl transition-all duration-500 group-hover:scale-105 relative z-10 opacity-0"
               onLoad={(e) => {
-                document.getElementById(`skeleton-${project.id}`).style.display = 'none';
-                e.target.classList.replace('opacity-0', 'opacity-100');
+                document.getElementById(
+                  `skeleton-${project.id}`,
+                ).style.display = "none";
+                e.target.classList.replace("opacity-0", "opacity-100");
               }}
               onError={(e) => {
-                e.target.style.display = 'none';
-                document.getElementById(`skeleton-${project.id}`).innerHTML = '<span class="text-sm font-medium">Image unavailable</span>';
+                e.target.style.display = "none";
+                document.getElementById(`skeleton-${project.id}`).innerHTML =
+                  '<span class="text-sm font-medium">Image unavailable</span>';
               }}
             />
           </>
         ) : (
-          <div className={`absolute inset-0 bg-linear-to-br ${accent ?? 'from-cyan-500/20 to-blue-600/20'}`} />
+          <div
+            className={`absolute inset-0 bg-linear-to-br ${accent ?? "from-cyan-500/20 to-blue-600/20"}`}
+          />
         )}
       </div>
 
@@ -90,7 +95,7 @@ export function ProjectCard({ project }) {
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-cyan-400 hover:text-cyan-300"
+            className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-cyan-400/10 px-4 py-2.5 text-sm font-semibold text-cyan-400 transition-colors hover:bg-cyan-400/20"
           >
             View Live Demo
             <span className="sr-only"> (opens in a new tab)</span>

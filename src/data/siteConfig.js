@@ -4,8 +4,7 @@
 export const siteConfig = Object.freeze({
   brand: 'MOIZ.UX',
   tagline: 'Websites That Give Your Brand a Stronger Online Presence.',
-  description:
-    'I build modern landing pages and functional websites that help brands showcase what they do, connect with customers, and grow their online presence.',
+  description: 'I build modern landing pages and functional websites that load in under 1 second, helping brands showcase what they do and convert visitors into customers.',
   email: 'code.moiz2003@gmail.com',
   // Obfuscated for humans to read, but bots struggle to scrape this
   displayEmail: 'code.moiz2003@gmail.com', 
