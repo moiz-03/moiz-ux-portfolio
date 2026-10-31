@@ -11,13 +11,14 @@ export function useFormValidation(initialValues, validate) {
 
     // --- CHARACTER FILTERING ---
     if (typeof nextValue === 'string') {
-      if (name === 'name' || name === 'businessName') {
-        // Names: Allow only letters, numbers, spaces, hyphens, apostrophes, ampersands, and periods
-        // Fixed: Removed the escape slash before the hyphen at the end
+      if (name === 'name') {
+        // Name: Allow ONLY letters, spaces, hyphens, apostrophes, and periods (NO numbers)
+        nextValue = nextValue.replace(/[^a-zA-Z\s-'&.]/g, '');
+      } else if (name === 'businessName') {
+        // Business: Allow letters, numbers, spaces, hyphens, etc.
         nextValue = nextValue.replace(/[^a-zA-Z0-9\s-'&.]/g, '');
       } else if (name === 'email') {
         // Email: Allow only standard email characters
-        // Fixed: Removed the escape slash before the hyphen at the end
         nextValue = nextValue.replace(/[^a-zA-Z0-9@._%+-]/g, '');
       }
     }

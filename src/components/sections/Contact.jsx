@@ -44,18 +44,27 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validate(values) {
   const errors = {};
-  if (!values.name.trim()) errors.name = "Please enter your name.";
-  else if (values.name.trim().length > 100)
+  
+  if (!values.name.trim()) {
+    errors.name = "Please enter your name.";
+  } else if (!/[a-zA-Z]/.test(values.name)) {
+    errors.name = "Please enter a valid name (letters only).";
+  } else if (values.name.trim().length > 100) {
     errors.name = "Please keep your name under 100 characters.";
+  }
+
   if (values.businessName && values.businessName.trim().length > 100)
     errors.businessName =
       "Please keep your business name under 100 characters.";
+
   if (!values.email.trim()) errors.email = "Please enter your email.";
   else if (values.email.trim().length > 254)
     errors.email = "Please enter an email under 254 characters.";
   else if (!EMAIL_RE.test(values.email))
     errors.email = "Please enter a valid email address.";
+
   if (!values.websiteType) errors.websiteType = "Please select a website type.";
+  
   if (!values.description.trim())
     errors.description = "Please describe your project.";
   else if (values.description.trim().length < 20)
@@ -63,6 +72,7 @@ function validate(values) {
       "Please add at least 20 characters so I can understand the project.";
   else if (values.description.trim().length > 5000)
     errors.description = "Please keep your description under 5,000 characters.";
+    
   return errors;
 }
 
@@ -253,7 +263,7 @@ export function Contact() {
                 </span>
                 <div>
                   <p className="text-sm font-semibold text-slate-50 group-hover:text-cyan-400">
-                    {siteConfig.displayEmail} {/* FIXED: Obfuscated Email */}
+                    {siteConfig.displayEmail}
                   </p>
                   <p className="text-xs text-slate-300">
                     Send a detailed brief by email.
@@ -262,7 +272,7 @@ export function Contact() {
               </a>
             </Card>
 
-                        <Card className="p-5">
+            <Card className="p-5">
               <a
                 href={siteConfig.instagram.url}
                 target="_blank"
@@ -284,7 +294,6 @@ export function Contact() {
               </a>
             </Card>
 
-            {/* ADD THIS NEW CARD */}
             <Card className="p-5">
               <a
                 href={siteConfig.linkedin.url}
