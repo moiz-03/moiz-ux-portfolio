@@ -4,7 +4,10 @@ import { siteConfig } from "../../data/siteConfig.js";
 
 export function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden border-b border-slate-800/60 min-h-162.5 lg:min-h-187.5">
+    <section
+      id="home"
+      className="relative overflow-hidden border-b border-slate-800/60 min-h-162.5 lg:min-h-187.5"
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(0,240,255,0.08),transparent_60%)]"
@@ -47,7 +50,10 @@ export function Hero() {
             className="absolute -inset-4 rounded-3xl bg-linear-to-* from-cyan-500/10 via-transparent to-blue-600/10 blur-2xl"
           />
           {/* Added contain-layout here for performance */}
-          <div aria-hidden="true" className="contain-layout relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/80 shadow-2xl">
+          <div
+            aria-hidden="true"
+            className="contain-layout relative overflow-hidden rounded-xl border border-slate-800 bg-slate-900/80 shadow-2xl"
+          >
             <div className="flex items-center gap-2 border-b border-slate-800 bg-slate-900 px-4 py-2.5">
               <span
                 className="h-2.5 w-2.5 rounded-full bg-red-500/60"
@@ -65,20 +71,33 @@ export function Hero() {
                 pixel-quest-aba36.web.app
               </div>
             </div>
-            
-                        {/* The Image Container */}
-            <div className="aspect-4/3 bg-slate-900 p-6 flex items-center justify-center overflow-hidden">
-                            <img 
-                src="/pixel-quest.webp" 
-                width="694" 
-                height="364" 
-                alt="Pixel Quest Dashboard Preview" 
+
+            {/* The Image Container */}
+            <div className="aspect-4/3 bg-slate-900 p-6 flex items-center justify-center overflow-hidden relative">
+              <img
+                src="/pixel-quest.webp"
+                width="694"
+                height="364"
+                alt="Pixel Quest Dashboard Preview"
                 fetchPriority="high"
-                className="w-full h-auto max-h-full object-contain rounded-md shadow-2xl border border-slate-700/50"
+                className="w-full h-auto max-h-full object-contain rounded-md shadow-2xl border border-slate-700/50 transition-opacity duration-300"
+                onError={(e) => {
+                  // Hides the broken image icon
+                  e.target.style.display = "none";
+                  // Shows the fallback text
+                  e.target.nextSibling.style.display = "flex";
+                }}
               />
+              {/* Fallback element (hidden by default) */}
+              <div
+                style={{ display: "none" }}
+                className="absolute inset-0 flex-col items-center justify-center bg-slate-800 text-slate-400"
+              >
+                <span className="text-sm font-medium">Preview unavailable</span>
+              </div>
             </div>
           </div>
-          
+
           <p className="mt-3 text-right text-[11px] text-slate-400">
             Preview: Pixel Quest
           </p>
