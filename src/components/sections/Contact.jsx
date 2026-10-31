@@ -7,6 +7,7 @@ import {
   CheckCircle2,
   AlertCircle,
   Linkedin,
+  WifiOff,
 } from "lucide-react";
 import { SectionHeading } from "../common/SectionHeading.jsx";
 import { Card } from "../common/Card.jsx";
@@ -44,7 +45,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function validate(values) {
   const errors = {};
-  
+
   if (!values.name.trim()) {
     errors.name = "Please enter your name.";
   } else if (!/^[a-zA-Z\s]+$/.test(values.name)) {
@@ -64,7 +65,7 @@ function validate(values) {
     errors.email = "Please enter a valid email address.";
 
   if (!values.websiteType) errors.websiteType = "Please select a website type.";
-  
+
   if (!values.description.trim())
     errors.description = "Please describe your project.";
   else if (values.description.trim().length < 20)
@@ -72,7 +73,7 @@ function validate(values) {
       "Please add at least 20 characters so I can understand the project.";
   else if (values.description.trim().length > 5000)
     errors.description = "Please keep your description under 5,000 characters.";
-    
+
   return errors;
 }
 
@@ -92,7 +93,11 @@ export function Contact() {
             type: "object",
             properties: {
               name: { type: "string", description: "Full name of the person" },
-              email: { type: "string", format: "email", description: "Valid email address" },
+              email: {
+                type: "string",
+                format: "email",
+                description: "Valid email address",
+              },
               preferredContact: {
                 type: "string",
                 description: "The user's preferred method of contact.",
@@ -110,7 +115,8 @@ export function Contact() {
               },
               description: {
                 type: "string",
-                description: "Details about their project, goals, and requirements",
+                description:
+                  "Details about their project, goals, and requirements",
               },
             },
             required: ["name", "email", "websiteType", "description"],
@@ -132,7 +138,8 @@ export function Contact() {
                 }),
               });
 
-              if (!res.ok) return `Error: Enquiry submission failed (${res.status}).`;
+              if (!res.ok)
+                return `Error: Enquiry submission failed (${res.status}).`;
               return "Success: Enquiry submitted.";
             } catch {
               return "Error: Could not submit the enquiry. Please try again.";
@@ -163,6 +170,14 @@ export function Contact() {
   const onSubmit = async (e) => {
     e.preventDefault();
     setServerError("");
+
+    if (!navigator.onLine) {
+      setStatus("error");
+      setServerError(
+        "You are offline. Please reconnect to send a message, or use the WhatsApp link below.",
+      );
+      return;
+    }
 
     // Honeypot check (belt-and-braces — server also checks)
     if (values.website_hp_field) {
@@ -372,8 +387,8 @@ export function Contact() {
                   </legend>
                   <div className="mt-2 flex gap-4">
                     {["email", "whatsapp"].map((opt) => (
-                      <div 
-                        key={opt} 
+                      <div
+                        key={opt}
                         className="flex items-center gap-2"
                         title={`Preferred Contact Method: ${opt === "email" ? "Email" : "WhatsApp"}`}
                       >
@@ -388,7 +403,10 @@ export function Contact() {
                           title={`Preferred Contact: ${opt === "email" ? "Email" : "WhatsApp"}`}
                           aria-label={`Select ${opt === "email" ? "Email" : "WhatsApp"} as the preferred contact method`}
                         />
-                        <label htmlFor={`contact-${opt}`} className="text-sm text-slate-300">
+                        <label
+                          htmlFor={`contact-${opt}`}
+                          className="text-sm text-slate-300"
+                        >
                           {opt === "email" ? "Email" : "WhatsApp"}
                         </label>
                       </div>
@@ -519,13 +537,19 @@ export function Contact() {
                 )}
                 {status === "error" && (
                   <div className="flex flex-wrap items-center gap-2 text-sm text-red-500">
-                    <AlertCircle className="h-4 w-4" aria-hidden="true" />
+                    {!navigator.onLine ? (
+                      <WifiOff className="h-4 w-4" aria-hidden="true" />
+                    ) : (
+                      <AlertCircle className="h-4 w-4" aria-hidden="true" />
+                    )}
+                    
                     {serverError || "Submission failed."}{" "}
+                    
                     <a
                       href={buildWhatsAppUrl()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline"
+                      className="underline font-semibold"
                     >
                       Message via WhatsApp instead →
                     </a>
@@ -553,7 +577,7 @@ function Field({ as = "input", id, label, required, error, options, ...rest }) {
     onChange: rest.onChange,
     value: rest.value,
     // Ensure inputMode and autoCapitalize are passed to the input
-    inputMode: rest.inputMode, 
+    inputMode: rest.inputMode,
     autoCapitalize: rest.autoCapitalize,
     spellCheck: rest.spellCheck,
     className:
