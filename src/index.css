@@ -31,10 +31,19 @@ html {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  
+  /* Disable spatial motion (transforms) and large animations */
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transform: none !important;
+  }
+
+  /* Re-enable subtle color/opacity transitions for UX */
+  a, button, input, textarea, select {
+    transition-property: color, background-color, border-color, opacity !important;
+    transition-duration: 200ms !important;
   }
 }
 
