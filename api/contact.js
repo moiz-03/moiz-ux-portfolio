@@ -21,18 +21,18 @@ import { Ratelimit } from '@upstash/ratelimit';
 const redis =
   process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
     ? new Redis({
-        url: process.env.UPSTASH_REDIS_REST_URL,
-        token: process.env.UPSTASH_REDIS_REST_TOKEN,
-      })
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    })
     : null;
 
 const ratelimit = redis
   ? new Ratelimit({
-      redis,
-      limiter: Ratelimit.slidingWindow(3, '15 m'),
-      analytics: false,
-      prefix: 'moiz:contact',
-    })
+    redis,
+    limiter: Ratelimit.slidingWindow(3, '15 m'),
+    analytics: false,
+    prefix: 'moiz:contact',
+  })
   : null;
 
 // ---------- Normalization Helpers ----------
@@ -56,12 +56,17 @@ const escapeHtml = (s) =>
     .replace(/'/g, '&#39;');
 
 const getClientIp = (req) => {
-  const realIp = req.headers['x-real-ip'];
-  if (typeof realIp === 'string' && realIp.trim()) return realIp.trim();
+  // Prioritize Vercel's trusted proxy headers first
   const vercelFwd = req.headers['x-vercel-forwarded-for'];
   if (typeof vercelFwd === 'string' && vercelFwd.trim()) return vercelFwd.split(',')[0].trim();
+
   const fwd = req.headers['x-forwarded-for'];
   if (typeof fwd === 'string' && fwd.trim()) return fwd.split(',')[0].trim();
+
+  // Fallback to x-real-ip only if the trusted headers are missing
+  const realIp = req.headers['x-real-ip'];
+  if (typeof realIp === 'string' && realIp.trim()) return realIp.trim();
+
   return req.socket?.remoteAddress ?? 'unknown';
 };
 
