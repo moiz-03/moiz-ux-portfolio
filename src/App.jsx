@@ -22,7 +22,7 @@ export default function App() {
 
       <Header />
 
-      <main id="main" tabIndex="-1" className="outline-none">
+      <main id="main" tabIndex="-1" className="outline-none pb-20 md:pb-0">
         <Hero />
         <div className="cv-auto">
           <Projects />

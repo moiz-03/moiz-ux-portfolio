@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, ArrowRight } from 'lucide-react';
 import { Button } from '../common/Button.jsx';
 import { MobileNav } from './MobileNav.jsx';
 import { siteConfig } from '../../data/siteConfig.js';
@@ -64,6 +64,13 @@ export function Header() {
       </header>
 
       <MobileNav open={mobileOpen} onClose={handleClose} activeId={activeId} />
+      {/* Sticky Mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-800 bg-slate-950/90 p-4 backdrop-blur-md md:hidden">
+        <Button as="a" href="#contact" className="w-full">
+          Start a Project
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
+      </div>
     </>
   );
 }

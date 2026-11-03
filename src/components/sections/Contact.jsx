@@ -217,14 +217,17 @@ export function Contact() {
         return;
       }
 
-      const res = await fetch("/api/contact", {
+            const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+      
       if (!res.ok) throw new Error(`Submission failed (${res.status})`);
-      setStatus("success");
+      
+      // Clear the form and redirect to the Thank You page
       reset();
+      window.location.href = "/thank-you";
     } catch (err) {
       setStatus("error");
       setServerError(
