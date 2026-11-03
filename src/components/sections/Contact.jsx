@@ -217,22 +217,22 @@ export function Contact() {
         return;
       }
 
-            const res = await fetch("/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      
+
       if (!res.ok) throw new Error(`Submission failed (${res.status})`);
-      
-      // Clear the form and redirect to the Thank You page
+
+      // Clear the form and redirect to the Thank You page (replace removes it from history)
       reset();
-      window.location.href = "/thank-you";
+      window.location.replace("/thank-you");
     } catch (err) {
       setStatus("error");
       setServerError(
         err.message ||
-          "Something went wrong. Please try again or message via WhatsApp.",
+        "Something went wrong. Please try again or message via WhatsApp.",
       );
     }
   };
@@ -576,11 +576,11 @@ function Field({ as = "input", id, label, required, error, options, ...rest }) {
     "aria-describedby": error ? `${id}-error` : undefined,
     title: label,
     "aria-label": label,
-    
+
     // WebMCP Declarative Tool Attributes
     toolparamtitle: label,
     toolparamdescription: `Please provide your ${cleanLabel}`,
-    
+
     onBlur: rest.onBlur,
     onChange: rest.onChange,
     value: rest.value,
