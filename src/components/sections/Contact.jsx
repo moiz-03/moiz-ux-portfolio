@@ -65,11 +65,10 @@ function validate(values) {
 
   if (!values.websiteType) errors.websiteType = "Please select a website type.";
 
-  if (!values.description.trim())
+    if (!values.description.trim())
     errors.description = "Please describe your project.";
-  else if (values.description.trim().length < 20)
-    errors.description =
-      "Please add at least 20 characters so I can understand the project.";
+  else if (values.description.trim().length < 10)
+    errors.description = "Please add at least 10 characters so I can understand the project.";
   else if (values.description.trim().length > 5000)
     errors.description = "Please keep your description under 5,000 characters.";
 
