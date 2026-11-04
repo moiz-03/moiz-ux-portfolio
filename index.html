@@ -5,6 +5,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0B0F17" />
+  <meta name="theme-color" content="#0B0F17" />
+  <meta name="geo.region" content="PK" />
+  <meta name="geo.placename" content="Pakistan" />
 
   <!-- Update Title & Description here -->
   <title>MOIZ.UX | Custom Websites & Web Development Portfolio</title>
@@ -45,7 +48,7 @@
   <link rel="canonical" href="https://moiz-ux.vercel.app" />
   <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
 
-  <!-- JSON-LD Structured Data for SEO -->
+    <!-- JSON-LD Structured Data for SEO, GEO & AEO -->
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -65,6 +68,10 @@
           "jobTitle": "Web Developer",
           "url": "https://moiz-ux.vercel.app",
           "image": "https://moiz-ux.vercel.app/og-image.png",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "PK"
+          },
           "sameAs": [
             "https://instagram.com/moiz.ux",
             "https://www.linkedin.com/in/moiz-imran-b94207367/"
@@ -75,6 +82,93 @@
             "React",
             "Tailwind CSS",
             "JavaScript"
+          ]
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://moiz-ux.vercel.app/#service",
+          "name": "MOIZ.UX Web Development",
+          "provider": {
+            "@id": "https://moiz-ux.vercel.app/#person"
+          },
+          "areaServed": {
+            "@type": "Place",
+            "name": "Worldwide"
+          },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Web Development Services",
+            "itemListElement": [
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Starter Landing Page",
+                  "description": "Focused single-page experience for brands, products, and campaigns."
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "price": "150",
+                  "priceCurrency": "USD"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Business Website",
+                  "description": "Multi-page brand home with about, services, and portfolio sections."
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "price": "400",
+                  "priceCurrency": "USD"
+                }
+              },
+              {
+                "@type": "Offer",
+                "itemOffered": {
+                  "@type": "Service",
+                  "name": "Custom Web App",
+                  "description": "Functional websites with dynamic content, databases, and forms."
+                },
+                "priceSpecification": {
+                  "@type": "PriceSpecification",
+                  "price": "800",
+                  "priceCurrency": "USD"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://moiz-ux.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How long does it take to build a landing page?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A standard landing page takes 5-7 days from discovery to launch, depending on content readiness and feedback turnaround."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What technologies are used?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "I build primarily with React, Tailwind CSS, and Vite for fast, modern, and easily maintainable websites."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is included in the project handover?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Handover includes the deployed website, access to the source code repository, and a brief walkthrough of how to manage your content."
+              }
+            }
           ]
         }
       ]
